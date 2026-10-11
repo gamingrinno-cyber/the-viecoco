@@ -1,0 +1,2909 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The ViéCOCO — PURE NATURE - PURE YOU | Mỹ Phẩm Dừa Thủ Công Cao Cấp</title>
+  <meta name="description" content="The ViéCOCO - Mỹ phẩm dừa thiên nhiên Bến Tre siêu cao cấp, thanh lịch, chuẩn phong cách Eco-Chic. Thuần khiết từ thiên nhiên, trọn vẹn là chính bạn. Thực hiện bởi Nhóm 1 - Tổ 3 (12A10)." />
+  
+  <!-- Favicon / Apple Touch Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥥</text></svg>" />
+
+  <!-- Google Fonts: Cormorant Garamond, Inter, Alex Brush, Pinyon Script -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=Pinyon+Script&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            champagne: {
+              DEFAULT: '#F7E6CA',
+              light: '#FBF3E6',
+              dark: '#E8D0AC',
+            },
+            coconut: {
+              husk: '#4A2E1B',
+              amber: '#7A5230',
+              milk: '#FFFCF7',
+              dark: '#2E190E',
+            },
+            sage: {
+              green: '#8C9A7B',
+              light: '#A4B096',
+            },
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Inter"', 'system-ui', 'sans-serif'],
+            signature: ['"Alex Brush"', '"Pinyon Script"', 'cursive'],
+          },
+          boxShadow: {
+            'soft': '0 4px 20px -2px rgba(74, 46, 27, 0.08)',
+            'luxury': '0 20px 40px -15px rgba(74, 46, 27, 0.15)',
+          },
+          scale: {
+            '108': '1.08',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & ReactDOM & Babel Standalone & Canvas Confetti -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F7E6CA;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #7A5230;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #4A2E1B;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .shimmer-btn {
+      position: relative;
+      overflow: hidden;
+    }
+    .shimmer-btn::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(60deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transform: rotate(30deg);
+      transition: all 0.8s ease;
+    }
+    .shimmer-btn:hover::after {
+      left: 100%;
+      top: 100%;
+    }
+  </style>
+</head>
+
+<body class="bg-[#F7E6CA] text-[#4A2E1B] font-sans antialiased selection:bg-[#7A5230] selection:text-[#FFFCF7] overflow-x-hidden">
+  
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo, useRef } = React;
+
+    // --- ALLOWED ADMIN EMAILS ---
+    const ALLOWED_ADMINS = [
+      'gamingrinno@gmail.com',
+      'nguyenlethuyduong1801@gmail.com'
+    ];
+
+    // --- INITIAL PRODUCTS DATA ---
+    const INITIAL_PRODUCTS = [
+      {
+        id: 'lip-balm',
+        name: 'Son dưỡng dừa ẩm mịn',
+        enName: 'Coconut Hydrating Lip Balm',
+        price: 79000,
+        originalPrice: 95000,
+        volume: '10g',
+        packaging: 'Hũ thủy tinh mờ nắp gỗ mộc',
+        tag: 'Bán chạy nhất',
+        rating: 4.9,
+        reviewCount: 142,
+        shortDesc: 'Dưỡng môi ẩm mượt 24h, làm mờ rãnh môi và hồng môi tự nhiên từ dầu dừa tinh khiết Bến Tre.',
+        description: 'Chắt lọc từ những giọt dầu dừa Bến Tre ép lạnh nguyên chất kết hợp cùng sáp ong hữu cơ và tinh dầu hạt mỡ. Son dưỡng mang lại cảm giác mỏng nhẹ như sương, tan chảy ngay khi chạm vào môi, tạo lớp màng khóa ẩm vượt trội suốt cả ngày dài.',
+        ingredients: ['100% Dầu dừa Bến Tre ép lạnh', 'Sáp ong rừng tự nhiên', 'Bơ hạt mỡ hữu cơ', 'Vitamin E tinh khiết'],
+        benefits: ['Khóa ẩm sâu 24 giờ liên tục', 'Cải thiện sắc tố môi, ngăn ngừa thâm sạm', 'Làm mờ vân rãnh môi, cho môi căng bóng'],
+        usage: 'Thoa trực tiếp lên môi bất cứ khi nào cảm thấy khô, hoặc dùng một lớp dày trước khi đi ngủ như mặt nạ ngủ cho môi.',
+        image: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80',
+        inStock: true
+      },
+      {
+        id: 'lip-scrub',
+        name: 'Tẩy tế bào chết môi chiết xuất dừa & đường mía',
+        enName: 'Coconut Sugar Lip Scrub',
+        price: 129000,
+        originalPrice: 149000,
+        volume: '20g',
+        packaging: 'Hũ thủy tinh cao cấp viền Champagne',
+        tag: 'Thuần chay 100%',
+        rating: 4.95,
+        reviewCount: 98,
+        shortDesc: 'Lấy đi tế bào chết nhẹ nhàng với tinh thể đường mía vàng và dầu dừa hữu cơ thơm ngát.',
+        description: 'Bí quyết cho đôi môi mịn màng như cánh hoa. Tinh thể đường mía nâu được nghiền siêu mịn theo tỉ lệ vàng, nhẹ nhàng cuốn trôi lớp da chết bong tróc mà không gây tổn thương hay rát môi, đồng thời tinh dầu dừa thẩm thấu nuôi dưỡng biểu bì ngay trong khi tẩy.',
+        ingredients: ['Tinh thể đường mía nâu tự nhiên', 'Dầu dừa nguyên chất ép lạnh', 'Dầu Jojoba hữu cơ', 'Chiết xuất vani Madagascar'],
+        benefits: ['Tẩy sạch tế bào chết dịu nhẹ', 'Kích thích tuần hoàn máu cho môi hồng hào', 'Tăng độ bám và lên màu chuẩn cho son môi'],
+        usage: 'Lấy một lượng nhỏ thoa lên môi ẩm, massage nhẹ nhàng theo hình xoắn ốc trong 1-2 phút, sau đó rửa lại bằng nước ấm.',
+        image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=800&q=80',
+        inStock: true
+      },
+      {
+        id: 'body-polish',
+        name: 'Tẩy tế bào chết body dầu dừa & bã cà phê hữu cơ',
+        enName: 'Organic Coconut Body Polish',
+        price: 159000,
+        originalPrice: 189000,
+        volume: '200g',
+        packaging: 'Hũ Spa sang trọng nắp vân gỗ nâu',
+        tag: 'Liệu trình Spa',
+        rating: 5.0,
+        reviewCount: 186,
+        shortDesc: 'Cà phê Robusta Đắk Lắk rang mộc quyện cùng dầu dừa dưỡng da mướt mịn, sáng khỏe toàn thân.',
+        description: 'Sự hòa quyện tuyệt đỉnh giữa bã cà phê Robusta tuyển chọn từ cao nguyên Đắk Lắk và dầu dừa Bến Tre trứ danh. Hạt cà phê được sàng lọc với kích thước hoàn hảo, giàu chất chống oxy hóa tự nhiên giúp đánh bay tế bào già cỗi, giảm thô ráp vùng khuỷu tay, đầu gối và cải thiện tình trạng viêm nang lông.',
+        ingredients: ['Bã cà phê Robusta Đắk Lắk mộc 100%', 'Dầu dừa nguyên chất ép lạnh', 'Dầu hạnh nhân ngọt', 'Tinh dầu vỏ cam ngọt tự nhiên'],
+        benefits: ['Làm sáng mịn và đều màu da toàn thân', 'Hỗ trợ cải thiện viêm nang lông và mụn lưng', 'Lưu lại hương thơm cà phê dừa ấm áp, quyến rũ'],
+        usage: 'Làm ướt cơ thể, lấy lượng vừa đủ massage toàn thân từ 3-5 phút (tập trung vùng da thô ráp), sau đó xả sạch với nước ấm. Dùng 2-3 lần/tuần.',
+        image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80',
+        inStock: true
+      }
+    ];
+
+    const BRAND_VALUES = [
+      {
+        id: 'vegan',
+        title: '100% Thuần chay',
+        subtitle: '100% Vegan & Cruelty-Free',
+        desc: 'Cam kết nguồn gốc hoàn toàn từ thực vật nhiệt đới, lành tính với mọi làn da học đường và nhạy cảm.'
+      },
+      {
+        id: 'cold-pressed',
+        title: 'Dầu dừa ép lạnh thủ công',
+        subtitle: 'Handcrafted Cold-Pressed',
+        desc: 'Phương pháp ép lạnh truyền thống giữ lại trọn vẹn 100% axit lauric và vitamin E quý giá của dừa Bến Tre.'
+      },
+      {
+        id: 'eco-friendly',
+        title: 'Bao bì thân thiện sinh thái',
+        subtitle: 'Sustainable Packaging',
+        desc: 'Sử dụng hũ thủy tinh tái sinh và nắp gỗ tự nhiên, giảm thiểu tối đa rác thải nhựa vì một hành tinh xanh.'
+      },
+      {
+        id: 'fresh-batch',
+        title: 'Mẻ nhỏ tươi mới mỗi tuần',
+        subtitle: 'Fresh Small Batches',
+        desc: 'Sản xuất thủ công từng mẻ nhỏ dưới sự giám sát tỉ mỉ, không chất bảo quản công nghiệp hay hóa chất tạo mùi.'
+      }
+    ];
+
+    const formatCurrency = (val) => new Intl.NumberFormat('vi-VN').format(val) + ' ₫';
+
+    // ================= ADMIN AUTH MODAL =================
+    function AdminAuthModal({ isOpen, onClose, onLoginSuccess }) {
+      const [email, setEmail] = useState('');
+      const [password, setPassword] = useState('');
+      const [errorMsg, setErrorMsg] = useState('');
+
+      if (!isOpen) return null;
+
+      const handleLogin = (e) => {
+        e.preventDefault();
+        const cleanEmail = email.trim().toLowerCase();
+        
+        if (!ALLOWED_ADMINS.includes(cleanEmail)) {
+          setErrorMsg('Email không thuộc quyền quản trị! Chỉ cho phép: gamingrinno@gmail.com và nguyenlethuyduong1801@gmail.com');
+          return;
+        }
+
+        // Default password check (flexible for students)
+        if (password.trim() === '' || password.length < 4) {
+          setErrorMsg('Vui lòng nhập mật khẩu quản trị (tối thiểu 4 ký tự)!');
+          return;
+        }
+
+        setErrorMsg('');
+        onLoginSuccess(cleanEmail);
+        onClose();
+      };
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4A2E1B]/60 backdrop-blur-md animate-fadeIn">
+          <div className="bg-[#FFFCF7] border border-[#4A2E1B]/20 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative">
+            <button
+              onClick={onClose}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#F7E6CA]/60 hover:bg-[#F7E6CA] text-[#4A2E1B] flex items-center justify-center font-bold text-sm"
+            >
+              ✕
+            </button>
+
+            <div className="text-center mb-6">
+              <div className="w-12 h-12 bg-[#F7E6CA] text-[#4A2E1B] rounded-2xl flex items-center justify-center text-2xl mx-auto mb-2 border border-[#4A2E1B]/20">
+                🔐
+              </div>
+              <h3 className="font-serif text-2xl font-bold text-[#4A2E1B]">
+                Đăng Nhập Quản Trị Viên
+              </h3>
+              <p className="text-xs text-[#7A5230] font-sans mt-1">
+                Dành riêng cho Admin phụ trách dự án The ViéCOCO
+              </p>
+            </div>
+
+            {errorMsg && (
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 text-xs rounded-xl text-center leading-relaxed">
+                {errorMsg}
+              </div>
+            )}
+
+            <form onSubmit={handleLogin} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                  Email Admin *
+                </label>
+                <input
+                  type="email"
+                  required
+                  placeholder="gamingrinno@gmail.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] focus:ring-2 focus:ring-[#7A5230] outline-none"
+                />
+                <p className="text-[10px] text-[#7A5230]/70 mt-1">
+                  Chỉ cho phép: gamingrinno@gmail.com hoặc nguyenlethuyduong1801@gmail.com
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                  Mật khẩu bảo mật *
+                </label>
+                <input
+                  type="password"
+                  required
+                  placeholder="Nhập mật khẩu (ví dụ: 12a10)"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] focus:ring-2 focus:ring-[#7A5230] outline-none"
+                />
+              </div>
+
+              <div className="pt-2">
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-[#4A2E1B] hover:bg-[#341F12] text-[#FFFCF7] rounded-xl text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all"
+                >
+                  Xác Thực & Mở Quyền Quản Trị
+                </button>
+              </div>
+
+              <div className="p-3 bg-[#F7E6CA]/30 rounded-xl border border-[#4A2E1B]/10 text-center text-[11px] text-[#7A5230]">
+                Sau khi đăng nhập, bạn có thể tự do <strong>Thêm/Xóa sản phẩm</strong>, <strong>tải ảnh mẫu thiết kế</strong> và <strong>sửa giá bán</strong> trực tiếp!
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= PRODUCT MANAGE MODAL (THÊM / SỬA SẢN PHẨM) =================
+    function ProductManageModal({ isOpen, onClose, productToEdit, onSaveProduct }) {
+      const [formData, setFormData] = useState({
+        name: '',
+        enName: '',
+        price: '',
+        originalPrice: '',
+        volume: '',
+        packaging: '',
+        tag: 'Mẫu thiết kế mới',
+        shortDesc: '',
+        description: '',
+        image: '',
+      });
+
+      const fileInputRef = useRef(null);
+
+      useEffect(() => {
+        if (productToEdit) {
+          setFormData({
+            id: productToEdit.id,
+            name: productToEdit.name || '',
+            enName: productToEdit.enName || '',
+            price: productToEdit.price || '',
+            originalPrice: productToEdit.originalPrice || '',
+            volume: productToEdit.volume || '',
+            packaging: productToEdit.packaging || '',
+            tag: productToEdit.tag || 'Mẫu thiết kế mới',
+            shortDesc: productToEdit.shortDesc || '',
+            description: productToEdit.description || '',
+            image: productToEdit.image || '',
+          });
+        } else {
+          setFormData({
+            name: '',
+            enName: '',
+            price: '85000',
+            originalPrice: '100000',
+            volume: '15g',
+            packaging: 'Hũ thủy tinh cao cấp nắp gỗ',
+            tag: 'Thiết kế độc quyền',
+            shortDesc: 'Sản phẩm mỹ phẩm dừa handmade do Admin tự thiết kế và sản xuất.',
+            description: 'Công thức dưỡng ẩm dừa ép lạnh thiên nhiên lành tính, không paraben.',
+            image: '',
+          });
+        }
+      }, [productToEdit, isOpen]);
+
+      if (!isOpen) return null;
+
+      // Xử lý tải ảnh từ máy tính (Upload file local chuyển sang base64 data URL)
+      const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = (uploadEvent) => {
+            setFormData((prev) => ({
+              ...prev,
+              image: uploadEvent.target.result,
+            }));
+          };
+          reader.readAsDataURL(file);
+        }
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const priceNum = parseInt(formData.price.toString().replace(/\D/g, ''), 10) || 79000;
+        const originalPriceNum = formData.originalPrice ? parseInt(formData.originalPrice.toString().replace(/\D/g, ''), 10) : undefined;
+
+        const newProd = {
+          id: productToEdit ? productToEdit.id : 'prod-' + Date.now(),
+          name: formData.name || 'Mỹ phẩm dừa tự thiết kế',
+          enName: formData.enName || 'Artisanal Coconut Creation',
+          price: priceNum,
+          originalPrice: originalPriceNum,
+          volume: formData.volume || '10g',
+          packaging: formData.packaging || 'Hũ thủy tinh nắp gỗ',
+          tag: formData.tag || 'Mẫu mới',
+          rating: productToEdit ? productToEdit.rating : 5.0,
+          reviewCount: productToEdit ? productToEdit.reviewCount : 1,
+          shortDesc: formData.shortDesc,
+          description: formData.description,
+          ingredients: ['100% Dầu dừa Bến Tre tinh khiết', 'Dưỡng chất thiên nhiên hữu cơ'],
+          benefits: ['Dưỡng ẩm chuyên sâu', 'Thân thiện làn da học đường'],
+          usage: 'Thoa đều lên vùng da cần dưỡng mỗi ngày.',
+          image: formData.image || 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80',
+          inStock: true,
+        };
+
+        onSaveProduct(newProd);
+        onClose();
+      };
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4A2E1B]/60 backdrop-blur-md animate-fadeIn">
+          <div className="bg-[#FFFCF7] border border-[#4A2E1B]/20 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            <button
+              onClick={onClose}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#F7E6CA]/60 hover:bg-[#F7E6CA] text-[#4A2E1B] flex items-center justify-center font-bold text-sm"
+            >
+              ✕
+            </button>
+
+            <div className="flex items-center space-x-3 mb-6 pb-4 border-b border-[#4A2E1B]/15">
+              <span className="p-2.5 bg-[#F7E6CA] rounded-2xl text-2xl">✨</span>
+              <div>
+                <h3 className="font-serif text-2xl font-bold text-[#4A2E1B]">
+                  {productToEdit ? 'Chỉnh Sửa Sản Phẩm Đã Có' : 'Đăng Mẫu Sản Phẩm Thiết Kế Mới'}
+                </h3>
+                <p className="text-xs text-[#7A5230]">
+                  Tự do cập nhật hình ảnh, tên và giá bán hiển thị trực tiếp lên website
+                </p>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* IMAGE UPLOAD SECTION */}
+              <div className="p-4 bg-[#F7E6CA]/30 rounded-2xl border border-[#4A2E1B]/15 space-y-3">
+                <label className="block text-xs font-bold text-[#4A2E1B]">
+                  📸 Hình Ảnh Sản Phẩm (Tự do tải ảnh mẫu bạn đã design) *
+                </label>
+
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  {/* Image Preview */}
+                  <div className="w-24 h-24 rounded-2xl bg-white border border-[#4A2E1B]/20 overflow-hidden flex items-center justify-center shrink-0">
+                    {formData.image ? (
+                      <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <span className="text-xs text-gray-400 text-center px-1">Chưa có ảnh</span>
+                    )}
+                  </div>
+
+                  <div className="flex-1 w-full space-y-2">
+                    {/* File upload button */}
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        onClick={() => fileInputRef.current && fileInputRef.current.click()}
+                        className="px-4 py-2 bg-[#4A2E1B] text-[#FFFCF7] text-xs font-semibold rounded-xl hover:bg-black transition-colors flex items-center space-x-1.5"
+                      >
+                        <span>📁 Chọn ảnh từ máy tính</span>
+                      </button>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleFileUpload}
+                      />
+                    </div>
+
+                    {/* Or URL link */}
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="Hoặc dán đường link ảnh web (http://...)"
+                        value={formData.image}
+                        onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                        className="w-full px-3 py-1.5 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Title & EN Title */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                    Tên sản phẩm tiếng Việt *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Ví dụ: Son dưỡng dừa dâu tây"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full px-3.5 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] outline-none focus:ring-2 focus:ring-[#7A5230]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                    Tên tiếng Anh (Sub-title)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Coconut Strawberry Lip Balm"
+                    value={formData.enName}
+                    onChange={(e) => setFormData({ ...formData, enName: e.target.value })}
+                    className="w-full px-3.5 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] outline-none focus:ring-2 focus:ring-[#7A5230]"
+                  />
+                </div>
+              </div>
+
+              {/* Price & Original Price */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                    Giá bán hiển thị (VNĐ) *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="85000"
+                    value={formData.price}
+                    onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                    className="w-full px-3.5 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] font-bold outline-none focus:ring-2 focus:ring-[#7A5230]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                    Giá gốc gạch ngang (nếu giảm giá)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="100000"
+                    value={formData.originalPrice}
+                    onChange={(e) => setFormData({ ...formData, originalPrice: e.target.value })}
+                    className="w-full px-3.5 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] outline-none focus:ring-2 focus:ring-[#7A5230]"
+                  />
+                </div>
+              </div>
+
+              {/* Volume & Tag */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                    Dung tích (g/ml)
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="15g / 100ml"
+                    value={formData.volume}
+                    onChange={(e) => setFormData({ ...formData, volume: e.target.value })}
+                    className="w-full px-3.5 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                    Quy cách bao bì
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Hũ thủy tinh nắp gỗ"
+                    value={formData.packaging}
+                    onChange={(e) => setFormData({ ...formData, packaging: e.target.value })}
+                    className="w-full px-3.5 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                    Huy hiệu nổi bật
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Thiết kế độc quyền"
+                    value={formData.tag}
+                    onChange={(e) => setFormData({ ...formData, tag: e.target.value })}
+                    className="w-full px-3.5 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Short Description */}
+              <div>
+                <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                  Mô tả ngắn hiển thị trên thẻ card *
+                </label>
+                <textarea
+                  rows="2"
+                  required
+                  placeholder="Mô tả tóm tắt điểm đặc biệt của sản phẩm..."
+                  value={formData.shortDesc}
+                  onChange={(e) => setFormData({ ...formData, shortDesc: e.target.value })}
+                  className="w-full px-3.5 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] outline-none resize-none"
+                />
+              </div>
+
+              {/* Detailed Description */}
+              <div>
+                <label className="block text-xs font-semibold text-[#4A2E1B] mb-1">
+                  Chi tiết công dụng & thành phần
+                </label>
+                <textarea
+                  rows="3"
+                  placeholder="Kể chi tiết về công thức tự làm, nguyên liệu sạch..."
+                  value={formData.description}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  className="w-full px-3.5 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] outline-none resize-none"
+                />
+              </div>
+
+              <div className="pt-4 border-t border-[#4A2E1B]/15 flex items-center justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="px-4 py-2.5 rounded-xl border border-[#4A2E1B]/20 text-[#4A2E1B] hover:bg-gray-100 text-xs font-medium"
+                >
+                  Hủy bỏ
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2.5 bg-[#4A2E1B] hover:bg-black text-[#FFFCF7] text-xs font-bold rounded-xl shadow-md transition-all"
+                >
+                  {productToEdit ? 'Lưu Cập Nhật' : 'Đăng Sản Phẩm Lên Web Ngay'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= TESTING NOTICE MODAL (YÊU CẦU ĐẶC BIỆT KHI BẤM THANH TOÁN) =================
+    function TestingNoticeModal({ isOpen, onClose }) {
+      if (!isOpen) return null;
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4A2E1B]/60 backdrop-blur-md animate-fadeIn">
+          <div className="bg-[#FFFCF7] border border-[#4A2E1B]/20 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center space-y-5">
+            <button
+              onClick={onClose}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#F7E6CA]/60 hover:bg-[#F7E6CA] text-[#4A2E1B] flex items-center justify-center font-bold text-sm"
+            >
+              ✕
+            </button>
+
+            <div className="w-16 h-16 bg-[#F7E6CA] rounded-full flex items-center justify-center text-3xl mx-auto shadow-inner border border-[#4A2E1B]/15 animate-bounce">
+              🥥
+            </div>
+
+            <div className="space-y-2">
+              <span className="text-[10px] uppercase font-bold tracking-widest text-[#7A5230] bg-[#F7E6CA] px-3 py-1 rounded-full">
+                Thông Báo Dự Án 12A10
+              </span>
+              <h3 className="font-serif text-2xl font-bold text-[#4A2E1B]">
+                The ViéCOCO Xin Phép Gửi Lời Nhắn
+              </h3>
+            </div>
+
+            {/* CÂU NGUYÊN VĂN THEO YÊU CẦU */}
+            <div className="p-5 rounded-2xl bg-[#F7E6CA]/50 border border-[#7A5230]/30 shadow-sm text-left">
+              <p className="font-sans text-sm sm:text-base font-semibold text-[#4A2E1B] leading-relaxed text-center">
+                “ Sản phẩm đang trong quá trình thử nghiệm, chưa đưa vào mua bán, xin lỗi đã làm phiền khách iuuu ”
+              </p>
+            </div>
+
+            <div className="text-xs text-[#7A5230] font-sans leading-relaxed">
+              Dự án mỹ phẩm dừa handmade do <strong>Nhóm 1 - Tổ 3 (12A10)</strong> thực hiện. Rất cảm ơn bạn đã ghé thăm và trải nghiệm website! 💕
+            </div>
+
+            <button
+              onClick={onClose}
+              className="w-full py-3.5 bg-[#4A2E1B] hover:bg-[#341F12] text-[#FFFCF7] rounded-xl text-xs font-bold uppercase tracking-wider shadow-md hover:shadow-lg transition-all shimmer-btn"
+            >
+              Dạ em hiểu rồi ạ 💕
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= SIDEBAR COMPONENT =================
+    function Sidebar({
+      activeSection,
+      onNavigate,
+      cartCount,
+      onOpenCart,
+      onOpenQR,
+      isEditPriceMode,
+      onToggleEditPriceMode,
+      adminUser,
+      onOpenAdminAuth,
+      onLogoutAdmin,
+      onOpenAddProduct
+    }) {
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+      const navItems = [
+        { id: 'hero', label: 'Trang chủ' },
+        { id: 'about', label: 'Giới thiệu thương hiệu' },
+        { id: 'products', label: 'Danh mục sản phẩm' },
+        { id: 'contact', label: 'Thông tin liên hệ' },
+      ];
+
+      const handleItemClick = (id) => {
+        onNavigate(id);
+        setMobileMenuOpen(false);
+      };
+
+      return (
+        <React.Fragment>
+          {/* DESKTOP FIXED LEFT SIDEBAR */}
+          <aside className="hidden lg:flex fixed top-0 left-0 bottom-0 w-72 bg-[#F7E6CA]/95 backdrop-blur-md border-r border-[#4A2E1B]/15 flex-col justify-between p-8 z-40 shadow-sm transition-all duration-300 overflow-y-auto">
+            <div>
+              {/* Brand Top */}
+              <div onClick={() => handleItemClick('hero')} className="cursor-pointer group block">
+                <div className="flex items-center space-x-3 mb-2">
+                  <div className="w-10 h-10 rounded-full border border-[#4A2E1B]/40 flex items-center justify-center bg-[#FFFCF7] shadow-sm group-hover:scale-105 transition-transform">
+                    <span className="font-serif text-[#4A2E1B] font-bold text-lg">V</span>
+                  </div>
+                  <div>
+                    <span className="block font-serif text-2xl font-bold tracking-tight text-[#4A2E1B] group-hover:text-[#7A5230] transition-colors">
+                      The ViéCOCO
+                    </span>
+                    <span className="text-[10px] uppercase tracking-widest text-[#7A5230] font-sans font-medium">
+                      Artisanal Organic Beauty
+                    </span>
+                  </div>
+                </div>
+                <div className="h-[1px] w-full bg-gradient-to-r from-[#4A2E1B]/30 via-[#7A5230]/20 to-transparent mt-4 mb-6"></div>
+              </div>
+
+              {/* ADMIN BADGE / LOGIN BUTTON */}
+              <div className="mb-6">
+                {adminUser ? (
+                  <div className="p-3 bg-[#4A2E1B] text-[#FFFCF7] rounded-2xl shadow-sm space-y-2 text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center space-x-1.5 font-bold text-[#F7E6CA]">
+                        <span>👑</span>
+                        <span>ADMIN ĐÃ ĐĂNG NHẬP</span>
+                      </span>
+                      <button
+                        onClick={onLogoutAdmin}
+                        className="text-[10px] text-red-300 hover:text-white underline"
+                      >
+                        Đăng xuất
+                      </button>
+                    </div>
+                    <p className="text-[11px] text-gray-200 truncate font-mono">
+                      {adminUser}
+                    </p>
+                    <button
+                      onClick={onOpenAddProduct}
+                      className="w-full py-1.5 px-2 bg-[#F7E6CA] text-[#4A2E1B] rounded-lg font-bold text-[11px] hover:bg-white transition-colors flex items-center justify-center space-x-1"
+                    >
+                      <span>+ Đăng mẫu sản phẩm mới</span>
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={onOpenAdminAuth}
+                    className="w-full py-2 px-3 rounded-xl border border-dashed border-[#7A5230]/50 hover:border-[#4A2E1B] bg-[#FFFCF7]/60 text-[#4A2E1B] text-xs font-semibold transition-all flex items-center justify-center space-x-1.5 group"
+                  >
+                    <span>🔐</span>
+                    <span className="group-hover:underline">Đăng nhập Admin (Email)</span>
+                  </button>
+                )}
+              </div>
+
+              {/* Navigation Links */}
+              <nav className="space-y-1.5">
+                {navItems.map((item, idx) => {
+                  const isActive = activeSection === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleItemClick(item.id)}
+                      className={`w-full text-left px-4 py-3 rounded-xl transition-all duration-300 flex items-center justify-between group ${
+                        isActive
+                          ? 'bg-[#4A2E1B] text-[#FFFCF7] shadow-md shadow-[#4A2E1B]/10 translate-x-1 font-semibold'
+                          : 'text-[#4A2E1B] hover:bg-[#4A2E1B]/10 hover:text-[#4A2E1B]'
+                      }`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <span className={`text-xs font-mono opacity-60 ${isActive ? 'text-[#F7E6CA]' : 'text-[#7A5230]'}`}>
+                          0{idx + 1}
+                        </span>
+                        <span className="font-sans text-sm tracking-wide">
+                          {item.label}
+                        </span>
+                      </div>
+                      <span
+                        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                          isActive ? 'bg-[#F7E6CA] scale-125' : 'bg-transparent group-hover:bg-[#4A2E1B]/40'
+                        }`}
+                      />
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Quick Actions in Sidebar */}
+            <div className="space-y-2.5 py-4 border-y border-[#4A2E1B]/15 my-4">
+              <button
+                onClick={onOpenQR}
+                className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-[#FFFCF7] border border-[#4A2E1B]/15 hover:border-[#4A2E1B]/40 text-[#4A2E1B] text-xs font-medium transition-all shadow-sm group hover:bg-white"
+                title="Quét mã QR để mở website trên điện thoại hoặc chia sẻ công khai"
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="text-base group-hover:rotate-6 transition-transform">📱</span>
+                  <span>Mã QR Web & Chia sẻ</span>
+                </div>
+                <span className="text-[10px] bg-[#8C9A7B]/20 text-[#4A2E1B] font-bold px-2 py-0.5 rounded-full">
+                  Mở
+                </span>
+              </button>
+
+              <button
+                onClick={onToggleEditPriceMode}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl border text-xs font-medium transition-all shadow-sm ${
+                  isEditPriceMode
+                    ? 'bg-[#7A5230] text-[#FFFCF7] border-[#4A2E1B] ring-2 ring-[#7A5230]/30 animate-pulse'
+                    : 'bg-[#FFFCF7] text-[#4A2E1B] border-[#4A2E1B]/15 hover:border-[#4A2E1B]/40'
+                }`}
+                title="Bật/Tắt chế độ chỉnh sửa giá bán động"
+              >
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm">⚙️</span>
+                  <span className="font-medium">Chỉnh giá nhanh</span>
+                </div>
+                <span
+                  className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase ${
+                    isEditPriceMode ? 'bg-[#FFFCF7] text-[#4A2E1B]' : 'bg-[#4A2E1B]/10 text-[#4A2E1B]'
+                  }`}
+                >
+                  {isEditPriceMode ? 'BẬT' : 'TẮT'}
+                </span>
+              </button>
+            </div>
+
+            {/* Cart & Signature */}
+            <div className="space-y-4">
+              <button
+                onClick={onOpenCart}
+                className="w-full bg-[#4A2E1B] hover:bg-[#341F12] text-[#FFFCF7] py-3.5 px-4 rounded-xl flex items-center justify-between shadow-md hover:shadow-lg transition-all shimmer-btn"
+              >
+                <div className="flex items-center space-x-2.5">
+                  <span className="text-base">🛍️</span>
+                  <span className="text-xs uppercase tracking-wider font-semibold">Giỏ hàng</span>
+                </div>
+                <span className="bg-[#F7E6CA] text-[#4A2E1B] font-bold text-xs w-6 h-6 rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              </button>
+
+              {/* Tinh chỉnh Signature theo yêu cầu mới */}
+              <div className="pt-2 text-center text-[#4A2E1B]/80">
+                <p className="font-signature text-2xl text-[#7A5230] leading-tight select-none">
+                  Signature: AURACOCO
+                </p>
+                <p className="font-signature text-base text-[#7A5230]/80 italic mt-0.5 select-none">
+                  Since 2026
+                </p>
+                <p className="text-[10px] font-sans text-[#4A2E1B]/60 mt-1">
+                  Nhóm 1 - Tổ 3 • 12A10
+                </p>
+              </div>
+            </div>
+          </aside>
+
+          {/* MOBILE HEADER */}
+          <header className="lg:hidden fixed top-0 left-0 right-0 h-16 bg-[#F7E6CA]/95 backdrop-blur-md border-b border-[#4A2E1B]/15 px-4 flex items-center justify-between z-40 shadow-sm">
+            <div onClick={() => handleItemClick('hero')} className="flex items-center space-x-2 cursor-pointer">
+              <div className="w-8 h-8 rounded-full border border-[#4A2E1B]/40 flex items-center justify-center bg-[#FFFCF7]">
+                <span className="font-serif text-[#4A2E1B] font-bold text-sm">V</span>
+              </div>
+              <span className="font-serif text-lg font-bold text-[#4A2E1B]">The ViéCOCO</span>
+            </div>
+
+            <div className="flex items-center space-x-2">
+              {adminUser ? (
+                <button
+                  onClick={onOpenAddProduct}
+                  className="px-2 py-1.5 rounded-xl bg-[#4A2E1B] text-[#FFFCF7] text-xs font-bold"
+                  title="Thêm sản phẩm"
+                >
+                  + Đăng mẫu
+                </button>
+              ) : (
+                <button
+                  onClick={onOpenAdminAuth}
+                  className="p-2 rounded-xl bg-[#FFFCF7] border border-[#4A2E1B]/15 text-[#4A2E1B] text-xs"
+                  title="Admin"
+                >
+                  🔐
+                </button>
+              )}
+
+              <button onClick={onOpenQR} className="p-2 rounded-xl bg-[#FFFCF7] border border-[#4A2E1B]/15 text-[#4A2E1B] text-xs">
+                📱
+              </button>
+
+              <button onClick={onOpenCart} className="relative p-2 rounded-xl bg-[#4A2E1B] text-[#FFFCF7] text-xs">
+                🛍️
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-[#8C9A7B] text-[#FFFCF7] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-xl bg-[#FFFCF7] border border-[#4A2E1B]/20 text-[#4A2E1B]"
+              >
+                {mobileMenuOpen ? '✕' : '☰'}
+              </button>
+            </div>
+          </header>
+
+          {/* MOBILE DRAWER */}
+          {mobileMenuOpen && (
+            <div className="lg:hidden fixed inset-0 z-50 bg-[#4A2E1B]/50 backdrop-blur-sm animate-fadeIn">
+              <div className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-[#F7E6CA] shadow-2xl p-6 flex flex-col justify-between overflow-y-auto">
+                <div>
+                  <div className="flex items-center justify-between pb-4 border-b border-[#4A2E1B]/15">
+                    <div>
+                      <h3 className="font-serif text-xl font-bold text-[#4A2E1B]">The ViéCOCO</h3>
+                      <p className="text-[11px] text-[#7A5230]">PURE NATURE - PURE YOU</p>
+                    </div>
+                    <button onClick={() => setMobileMenuOpen(false)} className="p-2 text-[#4A2E1B] font-bold">
+                      ✕
+                    </button>
+                  </div>
+
+                  {/* Admin info in drawer */}
+                  <div className="mt-4">
+                    {adminUser ? (
+                      <div className="p-3 bg-[#4A2E1B] text-[#FFFCF7] rounded-xl text-xs space-y-1.5">
+                        <p className="font-bold text-[#F7E6CA]">👑 Admin: {adminUser}</p>
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => {
+                              onOpenAddProduct();
+                              setMobileMenuOpen(false);
+                            }}
+                            className="px-2 py-1 bg-[#F7E6CA] text-[#4A2E1B] rounded font-bold text-[10px]"
+                          >
+                            + Đăng mẫu mới
+                          </button>
+                          <button
+                            onClick={() => {
+                              onLogoutAdmin();
+                              setMobileMenuOpen(false);
+                            }}
+                            className="px-2 py-1 bg-red-800 text-white rounded text-[10px]"
+                          >
+                            Đăng xuất
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          onOpenAdminAuth();
+                          setMobileMenuOpen(false);
+                        }}
+                        className="w-full py-2 bg-[#FFFCF7] text-[#4A2E1B] border border-[#4A2E1B]/20 rounded-xl text-xs font-semibold"
+                      >
+                        🔐 Đăng nhập Admin Email
+                      </button>
+                    )}
+                  </div>
+
+                  <nav className="mt-6 space-y-2">
+                    {navItems.map((item, idx) => {
+                      const isActive = activeSection === item.id;
+                      return (
+                        <button
+                          key={item.id}
+                          onClick={() => handleItemClick(item.id)}
+                          className={`w-full text-left px-4 py-3 rounded-xl transition-all flex items-center justify-between ${
+                            isActive ? 'bg-[#4A2E1B] text-[#FFFCF7] font-semibold' : 'text-[#4A2E1B]'
+                          }`}
+                        >
+                          <div className="flex items-center space-x-3">
+                            <span className="text-xs font-mono opacity-70">0{idx + 1}</span>
+                            <span className="text-sm font-sans">{item.label}</span>
+                          </div>
+                          <span className="text-xs opacity-60">→</span>
+                        </button>
+                      );
+                    })}
+                  </nav>
+
+                  <div className="mt-6 pt-4 border-t border-[#4A2E1B]/15 space-y-3">
+                    <button
+                      onClick={() => {
+                        onToggleEditPriceMode();
+                        setMobileMenuOpen(false);
+                      }}
+                      className={`w-full py-2.5 px-3 rounded-xl text-xs font-semibold flex items-center justify-between ${
+                        isEditPriceMode ? 'bg-[#7A5230] text-[#FFFCF7]' : 'bg-[#FFFCF7] text-[#4A2E1B] border border-[#4A2E1B]/20'
+                      }`}
+                    >
+                      <span>⚙️ Chế độ chỉnh giá bán</span>
+                      <span className="text-[10px] uppercase font-bold">{isEditPriceMode ? 'BẬT' : 'TẮT'}</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        onOpenQR();
+                        setMobileMenuOpen(false);
+                      }}
+                      className="w-full py-2.5 px-3 rounded-xl text-xs font-semibold bg-[#FFFCF7] text-[#4A2E1B] border border-[#4A2E1B]/20 flex items-center justify-between"
+                    >
+                      <span>📱 Quét mã QR vào web</span>
+                      <span className="text-[10px] text-[#8C9A7B] font-bold">Mở ngay</span>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-[#4A2E1B]/15 text-center">
+                  <p className="font-signature text-3xl text-[#7A5230]">Signature: AURACOCO</p>
+                  <p className="font-signature text-lg text-[#7A5230]/80 italic">Since 2026</p>
+                  <p className="text-xs text-[#4A2E1B]/70 mt-1">Dự án Nhóm 1 - Tổ 3 • 12A10</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </React.Fragment>
+      );
+    }
+
+    // ================= HERO COMPONENT =================
+    function Hero({ onExploreClick, onOpenQR }) {
+      return (
+        <section id="hero" className="relative min-h-[90vh] flex items-center justify-center pt-20 lg:pt-12 pb-16 lg:py-20 overflow-hidden">
+          <div className="absolute -top-32 -right-32 w-96 h-96 bg-[#8C9A7B]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 -left-20 w-80 h-80 bg-[#7A5230]/10 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              <div className="lg:col-span-7 space-y-6 text-center lg:text-left z-10">
+                <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#FFFCF7] border border-[#4A2E1B]/15 shadow-sm">
+                  <span className="w-2 h-2 rounded-full bg-[#8C9A7B] animate-pulse"></span>
+                  <span className="text-xs uppercase tracking-widest text-[#7A5230] font-sans font-semibold">
+                    Mỹ phẩm dừa thủ công thượng hạng
+                  </span>
+                </div>
+
+                <div className="space-y-3">
+                  <h1 className="font-serif text-5xl sm:text-6xl xl:text-7xl font-bold tracking-tight text-[#4A2E1B] leading-[1.08]">
+                    The ViéCOCO
+                  </h1>
+
+                  <div className="pt-1">
+                    <p className="font-serif text-2xl sm:text-3xl tracking-[0.2em] font-medium text-[#7A5230] uppercase">
+                      PURE NATURE — PURE YOU
+                    </p>
+                    <p className="font-sans text-base sm:text-lg text-[#4A2E1B]/80 font-normal italic mt-2">
+                      "Thuần khiết từ thiên nhiên, trọn vẹn là chính bạn"
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-sm sm:text-base text-[#4A2E1B]/75 leading-relaxed max-w-xl mx-auto lg:mx-0 font-sans">
+                  Khởi nguồn từ những rặng dừa Bến Tre trĩu quả được nuôi dưỡng bởi phù sa sông Tiền. 
+                  Mỗi sản phẩm là sự kết tinh của phương pháp ép lạnh thủ công chuẩn organic, 
+                  mang lại giải pháp dưỡng lành dịu nhẹ, thuần khiết và an toàn tuyệt đối cho làn da thanh xuân.
+                </p>
+
+                <div className="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                  <button
+                    onClick={onExploreClick}
+                    className="w-full sm:w-auto px-8 py-4 bg-[#4A2E1B] hover:bg-[#321c0e] text-[#FFFCF7] rounded-full font-sans font-semibold text-sm tracking-wider uppercase transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center space-x-3 group shimmer-btn"
+                  >
+                    <span>Khám phá bộ sưu tập</span>
+                    <span className="group-hover:translate-x-1 transition-transform">↓</span>
+                  </button>
+
+                  <button
+                    onClick={onOpenQR}
+                    className="w-full sm:w-auto px-6 py-4 bg-[#FFFCF7] hover:bg-white text-[#4A2E1B] border border-[#4A2E1B]/20 rounded-full font-sans font-medium text-sm tracking-wide transition-all duration-300 flex items-center justify-center space-x-2.5 shadow-sm group"
+                  >
+                    <span>📱 Quét QR mở trên mọi thiết bị</span>
+                  </button>
+                </div>
+
+                <div className="pt-6 grid grid-cols-3 gap-3 border-t border-[#4A2E1B]/15 max-w-md mx-auto lg:mx-0">
+                  <div className="text-center lg:text-left">
+                    <span className="block font-serif font-bold text-xl text-[#4A2E1B]">100%</span>
+                    <span className="text-[11px] text-[#7A5230] uppercase font-sans">Thuần thực vật</span>
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <span className="block font-serif font-bold text-xl text-[#4A2E1B]">Ép lạnh</span>
+                    <span className="text-[11px] text-[#7A5230] uppercase font-sans">Giữ dưỡng chất</span>
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <span className="block font-serif font-bold text-xl text-[#4A2E1B]">0% Paraben</span>
+                    <span className="text-[11px] text-[#7A5230] uppercase font-sans">Lành tính tối đa</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Visual Campaign Image */}
+              <div className="lg:col-span-5 relative">
+                <div className="relative mx-auto max-w-md lg:max-w-none">
+                  <div className="absolute inset-0 border border-[#4A2E1B]/20 rounded-3xl translate-x-3 translate-y-3 pointer-events-none" />
+                  
+                  <div className="relative rounded-3xl overflow-hidden shadow-2xl bg-[#FFFCF7] border border-[#4A2E1B]/15 group">
+                    <img
+                      src="assets/viecoco_hero_luxury.jpg"
+                      alt="The ViéCOCO Mỹ phẩm dừa thủ công"
+                      className="w-full h-[430px] sm:h-[480px] object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                      onError={(e) => {
+                        e.target.src = "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=1000&q=80";
+                      }}
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#4A2E1B]/60 via-transparent to-transparent opacity-60" />
+
+                    <div className="absolute top-4 left-4 bg-[#FFFCF7]/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-[#4A2E1B]/10 shadow-sm flex items-center space-x-2">
+                      <span className="w-2 h-2 rounded-full bg-[#8C9A7B]"></span>
+                      <span className="text-xs font-serif font-bold text-[#4A2E1B]">Organic Edition</span>
+                    </div>
+
+                    <div className="absolute bottom-5 left-5 right-5 text-white">
+                      <p className="font-serif text-lg font-medium text-[#FFFCF7] drop-shadow-sm">
+                        Dừa Bến Tre Tuyển Chọn
+                      </p>
+                      <p className="text-xs text-[#F7E6CA] opacity-90 font-sans">
+                        Thu hoạch đúng thời vụ • Ép lạnh tinh khiết
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="absolute -bottom-6 -left-6 bg-[#FFFCF7] border border-[#4A2E1B]/15 p-4 rounded-2xl shadow-xl hidden sm:flex items-center space-x-3 max-w-[220px]">
+                    <div className="w-10 h-10 rounded-full bg-[#F7E6CA] flex items-center justify-center text-[#4A2E1B] font-serif font-bold text-lg border border-[#4A2E1B]/20">
+                      🥥
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-[#4A2E1B] font-serif">Cold-Pressed</p>
+                      <p className="text-[10px] text-[#7A5230] font-sans">100% Natural Coconut</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ================= ABOUT COMPONENT =================
+    function About() {
+      return (
+        <section id="about" className="py-20 lg:py-28 relative">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#FFFCF7] border border-[#4A2E1B]/15">
+                <span className="text-[11px] uppercase tracking-widest text-[#7A5230] font-sans font-semibold">
+                  Câu chuyện thương hiệu
+                </span>
+              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#4A2E1B]">
+                Hồn Dừa Bến Tre — Nét Đẹp Tự Nhiên Thuần Khiết
+              </h2>
+              <div className="w-16 h-0.5 bg-[#4A2E1B]/30 mx-auto" />
+              <p className="font-sans text-sm sm:text-base text-[#4A2E1B]/75 leading-relaxed">
+                Sinh ra từ niềm say mê nét đẹp mộc mạc của xứ sở dừa, The ViéCOCO ra đời với khát khao định nghĩa lại 
+                chuẩn mực mỹ phẩm thiên nhiên: lành tính, tinh tế và trân quý từng giọt tinh hoa của đất mẹ.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-20">
+              <div className="lg:col-span-5 relative order-2 lg:order-1">
+                <div className="relative rounded-3xl overflow-hidden shadow-xl bg-[#FFFCF7] border border-[#4A2E1B]/15">
+                  <img
+                    src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=80"
+                    alt="Quy trình ép lạnh dầu dừa thủ công Bến Tre"
+                    className="w-full h-[400px] object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#4A2E1B]/70 via-transparent to-transparent opacity-70" />
+                  <div className="absolute bottom-6 left-6 right-6 text-white">
+                    <span className="text-xs uppercase tracking-wider text-[#F7E6CA] font-semibold">Artisanal Craft</span>
+                    <p className="font-serif text-xl font-bold mt-1 text-[#FFFCF7]">100% Ép Lạnh Không Qua Xử Lý Nhiệt</p>
+                    <p className="text-xs text-white/80 font-sans mt-0.5">Bảo toàn vẹn nguyên dưỡng chất sinh học tự nhiên</p>
+                  </div>
+                </div>
+
+                <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-[#8C9A7B] text-[#FFFCF7] flex flex-col items-center justify-center p-2 text-center shadow-lg border-2 border-[#FFFCF7] rotate-12">
+                  <span className="text-[9px] uppercase tracking-tighter font-bold">Chứng nhận</span>
+                  <span className="font-serif text-xs font-bold">100% Eco</span>
+                </div>
+              </div>
+
+              <div className="lg:col-span-7 space-y-6 order-1 lg:order-2">
+                <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#4A2E1B] leading-snug">
+                  Nuôi dưỡng thanh xuân bằng sự dịu lành của thiên nhiên
+                </h3>
+
+                <p className="font-sans text-sm sm:text-base text-[#4A2E1B]/80 leading-relaxed">
+                  Mỗi trái dừa được chúng tôi tuyển chọn từ những cây dừa già trên 20 năm tuổi tại Bến Tre, nơi có nồng độ dầu 
+                  và hàm lượng Axit Lauric cao nhất. Thay vì sử dụng phương pháp nấu sôi truyền thống dễ làm biến tính vitamin, 
+                  The ViéCOCO áp dụng công nghệ <strong>ép lạnh phân đoạn ly tâm</strong> khép kín.
+                </p>
+
+                <p className="font-sans text-sm sm:text-base text-[#4A2E1B]/80 leading-relaxed">
+                  Dầu dừa thu được trong suốt như pha lê, thơm ngát mùi dừa tươi tự nhiên dịu ngọt, thẩm thấu nhanh vào biểu bì 
+                  mà không gây bết dính. Đây là giải pháp chăm sóc làn da môi và cơ thể lý tưởng, hoàn toàn lành tính cho các bạn học sinh, 
+                  sinh viên và cả những làn da nhạy cảm nhất.
+                </p>
+
+                <div className="pt-2 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="p-4 rounded-2xl bg-[#FFFCF7] border border-[#4A2E1B]/15 text-center shadow-sm">
+                    <span className="text-2xl mb-1 block">🌱</span>
+                    <h4 className="font-serif font-bold text-[#4A2E1B] text-sm">100% Thuần chay</h4>
+                    <p className="text-[11px] text-[#7A5230] mt-1 font-sans">Nguồn gốc thực vật tự nhiên</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#FFFCF7] border border-[#4A2E1B]/15 text-center shadow-sm">
+                    <span className="text-2xl mb-1 block">🐇</span>
+                    <h4 className="font-serif font-bold text-[#4A2E1B] text-sm">Không thử nghiệm thú</h4>
+                    <p className="text-[11px] text-[#7A5230] mt-1 font-sans">Cam kết bảo vệ động vật</p>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#FFFCF7] border border-[#4A2E1B]/15 text-center shadow-sm">
+                    <span className="text-2xl mb-1 block">✨</span>
+                    <h4 className="font-serif font-bold text-[#4A2E1B] text-sm">Thủ công tỉ mỉ</h4>
+                    <p className="text-[11px] text-[#7A5230] mt-1 font-sans">Từng mẻ nhỏ chu đáo</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {BRAND_VALUES.map((item, index) => (
+                <div
+                  key={item.id}
+                  className="p-6 rounded-2xl bg-[#FFFCF7] border border-[#4A2E1B]/15 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between"
+                >
+                  <div>
+                    <span className="text-xs font-mono text-[#8C9A7B] font-bold block mb-2">0{index + 1}</span>
+                    <h4 className="font-serif font-bold text-lg text-[#4A2E1B] mb-1">{item.title}</h4>
+                    <p className="text-[11px] uppercase tracking-wider text-[#7A5230] font-sans font-medium mb-3">
+                      {item.subtitle}
+                    </p>
+                    <p className="text-xs text-[#4A2E1B]/75 leading-relaxed font-sans">{item.desc}</p>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-[#4A2E1B]/10 flex items-center justify-between text-xs text-[#8C9A7B] font-medium">
+                    <span>The ViéCOCO Standard</span>
+                    <span>✓</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </section>
+      );
+    }
+
+    // ================= PRODUCT CARD COMPONENT =================
+    function ProductCard({
+      product,
+      isEditPriceMode,
+      onUpdatePrice,
+      onAddToCart,
+      onQuickView,
+      isAdmin,
+      onEditProduct,
+      onDeleteProduct
+    }) {
+      const [isEditingInline, setIsEditingInline] = useState(false);
+      const [editedPriceStr, setEditedPriceStr] = useState(product.price.toString());
+      const [saveSuccess, setSaveSuccess] = useState(false);
+
+      const handleSavePrice = () => {
+        const cleanNum = parseInt(editedPriceStr.replace(/\D/g, ''), 10);
+        if (!isNaN(cleanNum) && cleanNum > 0) {
+          onUpdatePrice(product.id, cleanNum);
+          setIsEditingInline(false);
+          setSaveSuccess(true);
+          setTimeout(() => setSaveSuccess(false), 2000);
+        }
+      };
+
+      const handleCancelPrice = () => {
+        setEditedPriceStr(product.price.toString());
+        setIsEditingInline(false);
+      };
+
+      return (
+        <div className="group bg-[#FFFCF7] rounded-3xl border border-[#4A2E1B]/15 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between relative hover:-translate-y-1">
+          {/* Admin Controls Floating Toolbar on Card */}
+          {isAdmin && (
+            <div className="absolute top-3 right-3 z-20 flex items-center space-x-1.5 bg-[#4A2E1B]/90 backdrop-blur-md p-1.5 rounded-2xl shadow-lg border border-[#F7E6CA]/30">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEditProduct(product);
+                }}
+                className="px-2 py-1 bg-[#F7E6CA] text-[#4A2E1B] rounded-lg text-[10px] font-bold hover:bg-white transition-colors"
+                title="Sửa thông tin / thay ảnh sản phẩm"
+              >
+                Sửa ✎
+              </button>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDeleteProduct(product.id);
+                }}
+                className="px-2 py-1 bg-red-600 text-white rounded-lg text-[10px] font-bold hover:bg-red-700 transition-colors"
+                title="Xóa bớt sản phẩm này khỏi website"
+              >
+                Xóa 🗑️
+              </button>
+            </div>
+          )}
+
+          <div className="relative aspect-square overflow-hidden bg-[#F7E6CA]/30">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+              onError={(e) => {
+                e.target.src = "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=80";
+              }}
+            />
+
+            <div className="absolute top-4 left-4 flex flex-col gap-1.5 z-10">
+              <span className="bg-[#4A2E1B] text-[#FFFCF7] text-[10px] uppercase tracking-wider font-semibold px-3 py-1 rounded-full shadow-sm">
+                {product.tag}
+              </span>
+              <span className="bg-[#FFFCF7]/90 backdrop-blur-md text-[#7A5230] text-[10px] font-sans font-medium px-2.5 py-0.5 rounded-full border border-[#4A2E1B]/10 w-fit">
+                {product.volume}
+              </span>
+            </div>
+
+            <button
+              onClick={() => onQuickView(product)}
+              className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-[#FFFCF7]/90 backdrop-blur-md text-[#4A2E1B] hover:bg-[#4A2E1B] hover:text-[#FFFCF7] flex items-center justify-center transition-all duration-300 opacity-0 group-hover:opacity-100 shadow-md"
+              title="Xem chi tiết"
+            >
+              👁
+            </button>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#4A2E1B]/20 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          <div className="p-6 flex-1 flex flex-col justify-between space-y-4">
+            <div>
+              <div className="flex items-center space-x-2 text-xs text-[#7A5230] mb-1.5">
+                <span className="text-amber-500">★★★★★</span>
+                <span className="font-semibold">{product.rating}</span>
+                <span className="text-[#4A2E1B]/40">({product.reviewCount} đánh giá)</span>
+              </div>
+
+              <h3 
+                onClick={() => onQuickView(product)}
+                className="font-serif text-xl font-bold text-[#4A2E1B] group-hover:text-[#7A5230] transition-colors cursor-pointer leading-snug"
+              >
+                {product.name}
+              </h3>
+              <p className="text-xs text-[#7A5230] font-sans font-medium italic mt-0.5">
+                {product.enName}
+              </p>
+
+              <p className="text-xs text-[#4A2E1B]/75 line-clamp-2 mt-2 leading-relaxed font-sans">
+                {product.shortDesc}
+              </p>
+            </div>
+
+            <div className="pt-2 border-t border-[#4A2E1B]/10 flex items-center justify-between text-[11px] text-[#7A5230]">
+              <span>Quy cách: {product.packaging}</span>
+              <span className="text-[#8C9A7B] font-medium">● Còn hàng</span>
+            </div>
+
+            <div className="pt-2">
+              {isEditPriceMode ? (
+                /* INLINE EDIT MODE */
+                <div className="p-3 rounded-2xl bg-[#F7E6CA]/60 border border-[#7A5230]/40 space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] uppercase font-bold text-[#7A5230]">
+                      ⚙️ Giá bán niêm yết:
+                    </span>
+                    {saveSuccess && (
+                      <span className="text-[10px] text-emerald-700 font-bold animate-bounce">
+                        ✓ Đã lưu!
+                      </span>
+                    )}
+                  </div>
+
+                  {isEditingInline ? (
+                    <div className="flex items-center gap-2">
+                      <div className="relative flex-1">
+                        <input
+                          type="text"
+                          value={editedPriceStr}
+                          onChange={(e) => setEditedPriceStr(e.target.value)}
+                          placeholder="Nhập giá mới..."
+                          className="w-full px-2.5 py-1.5 text-sm font-bold text-[#4A2E1B] bg-white border border-[#4A2E1B]/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#7A5230]"
+                          autoFocus
+                        />
+                        <span className="absolute right-2 top-2 text-xs text-[#7A5230]">₫</span>
+                      </div>
+                      <button
+                        onClick={handleSavePrice}
+                        className="px-3 py-1.5 bg-[#4A2E1B] text-white text-xs font-semibold rounded-lg hover:bg-black transition-colors"
+                      >
+                        Lưu
+                      </button>
+                      <button
+                        onClick={handleCancelPrice}
+                        className="px-2.5 py-1.5 bg-gray-200 text-gray-700 text-xs rounded-lg hover:bg-gray-300"
+                      >
+                        Hủy
+                      </button>
+                    </div>
+                  ) : (
+                    <div 
+                      onClick={() => setIsEditingInline(true)}
+                      className="flex items-center justify-between p-2 bg-[#FFFCF7] rounded-xl border border-dashed border-[#7A5230]/60 hover:border-[#4A2E1B] cursor-pointer group/price transition-all"
+                      title="Nhấp vào đây để chỉnh sửa giá trực tiếp"
+                    >
+                      <div>
+                        <span className="font-serif text-xl font-bold text-[#4A2E1B]">
+                          {formatCurrency(product.price)}
+                        </span>
+                        <span className="block text-[10px] text-[#7A5230]">
+                          Nhấp để sửa giá ✎
+                        </span>
+                      </div>
+                      <span className="text-xs px-2.5 py-1 bg-[#7A5230] text-white rounded font-medium group-hover/price:scale-105 transition-transform">
+                        Chỉnh sửa
+                      </span>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                /* NORMAL STOREFRONT MODE */
+                <div className="space-y-3">
+                  <div className="flex items-baseline justify-between">
+                    <div>
+                      <span className="font-serif text-2xl font-bold text-[#4A2E1B]">
+                        {formatCurrency(product.price)}
+                      </span>
+                      {product.originalPrice && product.originalPrice > product.price && (
+                        <span className="ml-2 text-xs line-through text-[#4A2E1B]/40 font-sans">
+                          {formatCurrency(product.originalPrice)}
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-[10px] uppercase text-[#8C9A7B] font-bold tracking-wider">
+                      Organic
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => onQuickView(product)}
+                      className="w-full py-2.5 px-3 rounded-xl border border-[#4A2E1B]/20 text-[#4A2E1B] hover:bg-[#F7E6CA]/50 text-xs font-medium transition-all"
+                    >
+                      Chi tiết
+                    </button>
+                    <button
+                      onClick={() => onAddToCart(product)}
+                      className="w-full py-2.5 px-3 rounded-xl bg-[#4A2E1B] hover:bg-[#321c0e] text-[#FFFCF7] text-xs font-semibold tracking-wide transition-all shadow-md hover:shadow-lg flex items-center justify-center space-x-1 shimmer-btn"
+                    >
+                      <span>Thêm giỏ</span>
+                      <span>+</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= PRICE MODAL COMPONENT =================
+    function PriceModal({ isOpen, onClose, products, onBatchUpdatePrices, onResetDefaults }) {
+      const [tempPrices, setTempPrices] = useState({});
+      const [notification, setNotification] = useState(null);
+
+      useEffect(() => {
+        if (products) {
+          const init = {};
+          products.forEach((p) => {
+            init[p.id] = p.price.toString();
+          });
+          setTempPrices(init);
+        }
+      }, [products, isOpen]);
+
+      if (!isOpen) return null;
+
+      const handlePriceChange = (id, val) => {
+        setTempPrices((prev) => ({ ...prev, [id]: val }));
+      };
+
+      const handleSaveAll = () => {
+        const parsed = {};
+        Object.entries(tempPrices).forEach(([id, val]) => {
+          const clean = parseInt(val.toString().replace(/\D/g, ''), 10);
+          if (!isNaN(clean) && clean > 0) {
+            parsed[id] = clean;
+          }
+        });
+        onBatchUpdatePrices(parsed);
+        setNotification('Đã lưu thành công toàn bộ giá bán vào hệ thống!');
+        setTimeout(() => {
+          setNotification(null);
+          onClose();
+        }, 1200);
+      };
+
+      const handleReset = () => {
+        if (confirm('Bạn có chắc muốn khôi phục bảng giá chuẩn ban đầu?')) {
+          onResetDefaults();
+          setNotification('Đã khôi phục giá mặc định thành công!');
+          setTimeout(() => {
+            setNotification(null);
+            onClose();
+          }, 1200);
+        }
+      };
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4A2E1B]/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-[#FFFCF7] border border-[#4A2E1B]/20 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+            <div className="flex items-center justify-between pb-4 border-b border-[#4A2E1B]/15">
+              <div className="flex items-center space-x-3">
+                <span className="p-2.5 bg-[#F7E6CA] rounded-2xl text-xl">⚙️</span>
+                <div>
+                  <h3 className="font-serif text-2xl font-bold text-[#4A2E1B]">
+                    Bảng Quản Lý Giá Bán Động
+                  </h3>
+                  <p className="text-xs text-[#7A5230] font-sans">
+                    Dành riêng cho Tổ 3 - 12A10 điều chỉnh nhanh giá sản phẩm
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={onClose}
+                className="w-8 h-8 rounded-full bg-[#F7E6CA]/60 hover:bg-[#F7E6CA] text-[#4A2E1B] flex items-center justify-center font-bold"
+              >
+                ✕
+              </button>
+            </div>
+
+            {notification && (
+              <div className="mt-4 p-3 bg-emerald-100 border border-emerald-300 text-emerald-800 rounded-xl text-xs font-semibold text-center animate-fadeIn">
+                ✓ {notification}
+              </div>
+            )}
+
+            <div className="mt-6 space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+              {products.map((p) => (
+                <div
+                  key={p.id}
+                  className="p-4 rounded-2xl bg-[#F7E6CA]/30 border border-[#4A2E1B]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                >
+                  <div className="flex items-center space-x-3">
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="w-12 h-12 rounded-xl object-cover border border-[#4A2E1B]/15"
+                    />
+                    <div>
+                      <h4 className="font-serif font-bold text-sm text-[#4A2E1B]">{p.name}</h4>
+                      <p className="text-[11px] text-[#7A5230]">{p.volume} • {p.tag}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <div className="relative w-32">
+                      <input
+                        type="text"
+                        value={tempPrices[p.id] || ''}
+                        onChange={(e) => handlePriceChange(p.id, e.target.value)}
+                        className="w-full pl-3 pr-7 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-sm font-bold text-[#4A2E1B] focus:outline-none focus:ring-2 focus:ring-[#7A5230]"
+                        placeholder="79000"
+                      />
+                      <span className="absolute right-2.5 top-2.5 text-xs text-[#7A5230] font-bold">₫</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-6 pt-4 border-t border-[#4A2E1B]/15 flex items-center justify-between gap-3">
+              <button
+                onClick={handleReset}
+                className="px-4 py-2.5 rounded-xl border border-red-300 text-red-700 hover:bg-red-50 text-xs font-semibold transition-colors"
+              >
+                ↺ Khôi phục gốc
+              </button>
+
+              <div className="flex items-center space-x-2">
+                <button
+                  onClick={onClose}
+                  className="px-4 py-2.5 rounded-xl border border-[#4A2E1B]/20 text-[#4A2E1B] hover:bg-gray-100 text-xs font-medium"
+                >
+                  Đóng
+                </button>
+                <button
+                  onClick={handleSaveAll}
+                  className="px-5 py-2.5 rounded-xl bg-[#4A2E1B] hover:bg-[#321c0e] text-[#FFFCF7] text-xs font-bold shadow-md hover:shadow-lg transition-all"
+                >
+                  Lưu toàn bộ thay đổi
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= QR MODAL COMPONENT (HỖ TRỢ MỌI NGUỒN MẠNG WI-FI / 4G / 5G) =================
+    function QRModal({ isOpen, onClose }) {
+      const [activeTab, setActiveTab] = useState('website');
+      const [copied, setCopied] = useState(false);
+      
+      const DEFAULT_LAN_URL = 'http://192.168.123.7:8080';
+      const isFileProtocol = typeof window !== 'undefined' && window.location.protocol === 'file:';
+      
+      const [targetUrl, setTargetUrl] = useState(() => {
+        if (typeof window !== 'undefined') {
+          return window.location.protocol === 'file:' ? DEFAULT_LAN_URL : window.location.href;
+        }
+        return DEFAULT_LAN_URL;
+      });
+
+      if (!isOpen) return null;
+
+      const handleCopyLink = () => {
+        if (navigator.clipboard) {
+          navigator.clipboard.writeText(targetUrl);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        }
+      };
+
+      const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
+        targetUrl
+      )}&bgcolor=FFFCF7&color=4A2E1B&margin=10`;
+
+      const vietQrPaymentUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(
+        '2|99|0988234567|THEVIECOCO NHOM1 TO3 12A10|contact@theviecoco.vn|0|0|Thanh toan The VieCOCO'
+      )}&bgcolor=FFFCF7&color=4A2E1B&margin=10`;
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4A2E1B]/60 backdrop-blur-md animate-fadeIn">
+          <div className="bg-[#FFFCF7] border border-[#4A2E1B]/20 rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative text-center">
+            <button
+              onClick={onClose}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#F7E6CA]/60 hover:bg-[#F7E6CA] text-[#4A2E1B] flex items-center justify-center font-bold text-sm transition-colors"
+            >
+              ✕
+            </button>
+
+            <div className="mb-3">
+              <div className="inline-block p-2 bg-[#F7E6CA] rounded-2xl mb-1.5">
+                <span className="font-serif font-bold text-lg text-[#4A2E1B]">The ViéCOCO</span>
+              </div>
+              <h3 className="font-serif text-2xl font-bold text-[#4A2E1B]">
+                {activeTab === 'website' ? 'Mã QR Vào Website Toàn Cầu' : 'Mã QR Đặt Hàng / Chuyển Khoản'}
+              </h3>
+              <p className="text-xs text-[#7A5230] mt-1 font-sans">
+                Mở camera quét để truy cập tức thì trên mọi thiết bị & mạng Wi-Fi/4G/5G
+              </p>
+            </div>
+
+            <div className="flex bg-[#F7E6CA]/50 p-1 rounded-2xl mb-3 max-w-xs mx-auto border border-[#4A2E1B]/10">
+              <button
+                onClick={() => setActiveTab('website')}
+                className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all ${
+                  activeTab === 'website' ? 'bg-[#4A2E1B] text-[#FFFCF7] shadow-sm' : 'text-[#4A2E1B]'
+                }`}
+              >
+                Vào Trang Web
+              </button>
+              <button
+                onClick={() => setActiveTab('payment')}
+                className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all ${
+                  activeTab === 'payment' ? 'bg-[#4A2E1B] text-[#FFFCF7] shadow-sm' : 'text-[#4A2E1B]'
+                }`}
+              >
+                VietQR Dự Án
+              </button>
+            </div>
+
+            <div className="relative inline-block p-4 rounded-3xl bg-[#F7E6CA]/40 border-2 border-dashed border-[#7A5230]/40 shadow-inner my-1">
+              <div className="w-56 h-56 bg-[#FFFCF7] rounded-2xl p-3 shadow-md flex items-center justify-center relative overflow-hidden">
+                <img
+                  src={activeTab === 'website' ? qrCodeUrl : vietQrPaymentUrl}
+                  alt="Mã QR The ViéCOCO"
+                  className="w-full h-full object-contain"
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="w-10 h-10 rounded-full bg-[#FFFCF7] border border-[#4A2E1B] shadow-lg flex items-center justify-center">
+                    <span className="font-serif font-bold text-[#4A2E1B] text-xs">V</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-2 flex items-center justify-center space-x-1.5 text-[11px] text-[#7A5230] font-sans font-medium">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#8C9A7B]"></span>
+                <span>Tương thích mọi thiết bị • Chuẩn Eco-Chic</span>
+              </div>
+            </div>
+
+            {/* Editable Target URL for Global Links */}
+            <div className="mt-3 space-y-2">
+              <div className="text-left">
+                <label className="block text-[11px] font-semibold text-[#4A2E1B] mb-1">
+                  🌐 Đường link website (tự do dán link công khai để đổi mã QR):
+                </label>
+                <div className="flex items-center space-x-2 bg-[#F7E6CA]/40 px-3 py-2 rounded-xl border border-[#4A2E1B]/20">
+                  <input
+                    type="text"
+                    value={targetUrl}
+                    onChange={(e) => setTargetUrl(e.target.value)}
+                    placeholder="http://192.168.123.7:8080 hoặc link công khai..."
+                    className="w-full bg-transparent text-xs text-[#4A2E1B] font-mono outline-none"
+                  />
+                  <button
+                    onClick={handleCopyLink}
+                    className="px-3 py-1 bg-[#4A2E1B] hover:bg-[#341f12] text-[#FFFCF7] text-xs rounded-lg font-medium whitespace-nowrap transition-colors"
+                  >
+                    {copied ? '✓ Đã chép' : 'Sao chép'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-2.5 bg-amber-50 rounded-xl border border-amber-200 text-left text-[11px] text-[#4A2E1B] space-y-1">
+                <p className="font-bold text-amber-900">💡 Hướng dẫn kết nối:</p>
+                <p>• <strong>Cùng Wi-Fi:</strong> Quét link <code className="bg-white px-1 rounded">{DEFAULT_LAN_URL}</code></p>
+                <p>• <strong>Mọi nơi (4G/5G/khác Wi-Fi):</strong> Nhấp đúp file <code className="bg-white px-1 rounded">open-tunnel.bat</code> để lấy link công khai toàn cầu!</p>
+              </div>
+
+              <p className="text-[11px] text-[#4A2E1B]/70 italic pt-1">
+                Thực hiện bởi: Nhóm 1 - Tổ 3 • 12A10 | Signature: AURACOCO
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= CART DRAWER COMPONENT =================
+    function CartDrawer({
+      isOpen,
+      onClose,
+      items,
+      onUpdateQuantity,
+      onRemoveItem,
+      onClearCart,
+      onOpenQR,
+      onTriggerTestingNotice
+    }) {
+      const [promoCode, setPromoCode] = useState('');
+      const [discountPercent, setDiscountPercent] = useState(0);
+      const [promoMessage, setPromoMessage] = useState('');
+
+      if (!isOpen) return null;
+
+      const subtotal = items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+      const discountAmount = Math.round((subtotal * discountPercent) / 100);
+      const shippingFee = subtotal > 200000 || subtotal === 0 ? 0 : 25000;
+      const grandTotal = Math.max(0, subtotal - discountAmount + shippingFee);
+
+      const handleApplyPromo = () => {
+        if (promoCode.trim().toUpperCase() === 'VIECOCO10' || promoCode.trim().toUpperCase() === '12A10') {
+          setDiscountPercent(10);
+          setPromoMessage('Áp dụng thành công mã ưu đãi 10% từ 12A10!');
+        } else {
+          setPromoMessage('Mã không hợp lệ. Thử: 12A10 hoặc VIECOCO10');
+        }
+      };
+
+      // KHI NHẤN VÀO MỤC THANH TOÁN -> HIỆN THÔNG BÁO THỬ NGHIỆM ĐÚNG THEO YÊU CẦU!
+      const handleProceedCheckout = () => {
+        onTriggerTestingNotice();
+      };
+
+      return (
+        <div className="fixed inset-0 z-50 overflow-hidden bg-[#4A2E1B]/50 backdrop-blur-sm animate-fadeIn">
+          <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div className="w-screen max-w-md bg-[#FFFCF7] shadow-2xl flex flex-col justify-between border-l border-[#4A2E1B]/15">
+              
+              <div className="p-6 border-b border-[#4A2E1B]/15 flex items-center justify-between bg-[#F7E6CA]/40">
+                <div className="flex items-center space-x-2">
+                  <span className="text-xl">🛍️</span>
+                  <div>
+                    <h3 className="font-serif text-xl font-bold text-[#4A2E1B]">
+                      Giỏ Hàng Của Bạn
+                    </h3>
+                    <p className="text-[11px] text-[#7A5230]">
+                      {items.length} mặt hàng được chọn
+                    </p>
+                  </div>
+                </div>
+                <button
+                  onClick={onClose}
+                  className="w-8 h-8 rounded-full bg-[#FFFCF7] text-[#4A2E1B] hover:bg-[#4A2E1B] hover:text-[#FFFCF7] flex items-center justify-center font-bold text-sm transition-colors border border-[#4A2E1B]/20"
+                >
+                  ✕
+                </button>
+              </div>
+
+              <div className="flex-1 overflow-y-auto p-6 space-y-6">
+                {items.length === 0 ? (
+                  <div className="text-center py-16 space-y-3">
+                    <span className="text-4xl block">🥥</span>
+                    <p className="font-serif text-lg font-bold text-[#4A2E1B]">
+                      Giỏ hàng của bạn đang trống
+                    </p>
+                    <p className="text-xs text-[#7A5230]">
+                      Hãy chọn những sản phẩm dừa thiên nhiên cao cấp để nâng niu làn da nhé!
+                    </p>
+                    <button
+                      onClick={onClose}
+                      className="mt-4 px-6 py-2.5 bg-[#4A2E1B] text-[#FFFCF7] rounded-full text-xs font-semibold"
+                    >
+                      Khám phá sản phẩm
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {items.map((item) => (
+                      <div
+                        key={item.product.id}
+                        className="p-3 rounded-2xl bg-[#F7E6CA]/30 border border-[#4A2E1B]/15 flex items-center space-x-3"
+                      >
+                        <img
+                          src={item.product.image}
+                          alt={item.product.name}
+                          className="w-16 h-16 rounded-xl object-cover border border-[#4A2E1B]/10"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-serif font-bold text-sm text-[#4A2E1B] truncate">
+                            {item.product.name}
+                          </h4>
+                          <p className="text-xs text-[#7A5230] font-bold">
+                            {formatCurrency(item.product.price)}
+                          </p>
+                          
+                          <div className="flex items-center space-x-2 mt-2">
+                            <div className="flex items-center border border-[#4A2E1B]/20 rounded-lg bg-white overflow-hidden">
+                              <button
+                                onClick={() => onUpdateQuantity(item.product.id, item.quantity - 1)}
+                                className="w-6 h-6 flex items-center justify-center text-xs font-bold text-[#4A2E1B] hover:bg-gray-100"
+                              >
+                                -
+                              </button>
+                              <span className="w-8 text-center text-xs font-bold">
+                                {item.quantity}
+                              </span>
+                              <button
+                                onClick={() => onUpdateQuantity(item.product.id, item.quantity + 1)}
+                                className="w-6 h-6 flex items-center justify-center text-xs font-bold text-[#4A2E1B] hover:bg-gray-100"
+                              >
+                                +
+                              </button>
+                            </div>
+
+                            <button
+                              onClick={() => onRemoveItem(item.product.id)}
+                              className="text-[10px] text-red-600 hover:underline"
+                            >
+                              Xóa
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+
+                    <div className="pt-2">
+                      <div className="flex space-x-2">
+                        <input
+                          type="text"
+                          placeholder="Mã giảm giá (ví dụ: 12A10)"
+                          value={promoCode}
+                          onChange={(e) => setPromoCode(e.target.value)}
+                          className="flex-1 px-3 py-2 bg-white border border-[#4A2E1B]/20 rounded-xl text-xs uppercase"
+                        />
+                        <button
+                          onClick={handleApplyPromo}
+                          className="px-4 py-2 bg-[#7A5230] text-white text-xs font-semibold rounded-xl hover:bg-[#4A2E1B]"
+                        >
+                          Áp dụng
+                        </button>
+                      </div>
+                      {promoMessage && (
+                        <p className="text-[11px] text-[#7A5230] mt-1 italic">
+                          {promoMessage}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {items.length > 0 && (
+                <div className="p-6 border-t border-[#4A2E1B]/15 bg-[#F7E6CA]/30 space-y-3">
+                  <div className="space-y-1.5 text-xs">
+                    <div className="flex justify-between text-[#4A2E1B]/80">
+                      <span>Tạm tính:</span>
+                      <span>{formatCurrency(subtotal)}</span>
+                    </div>
+                    {discountAmount > 0 && (
+                      <div className="flex justify-between text-emerald-700 font-medium">
+                        <span>Ưu đãi (10%):</span>
+                        <span>-{formatCurrency(discountAmount)}</span>
+                      </div>
+                    )}
+                    <div className="flex justify-between text-[#4A2E1B]/80">
+                      <span>Phí vận chuyển:</span>
+                      <span>{shippingFee === 0 ? 'Miễn phí' : formatCurrency(shippingFee)}</span>
+                    </div>
+                    <div className="pt-2 border-t border-[#4A2E1B]/15 flex justify-between font-serif text-base font-bold text-[#4A2E1B]">
+                      <span>Tổng thanh toán:</span>
+                      <span>{formatCurrency(grandTotal)}</span>
+                    </div>
+                  </div>
+
+                  {/* Nút bấm thanh toán kích hoạt thông báo thử nghiệm! */}
+                  <button
+                    onClick={handleProceedCheckout}
+                    className="w-full py-3.5 bg-[#4A2E1B] hover:bg-[#321c0e] text-[#FFFCF7] rounded-xl font-sans font-bold text-xs uppercase tracking-wider shadow-lg hover:shadow-xl transition-all flex items-center justify-center space-x-2 shimmer-btn"
+                  >
+                    <span>Tiến hành thanh toán</span>
+                    <span>→</span>
+                  </button>
+                </div>
+              )}
+
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= QUICK VIEW MODAL =================
+    function QuickViewModal({ product, onClose, onAddToCart }) {
+      if (!product) return null;
+
+      return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#4A2E1B]/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-[#FFFCF7] border border-[#4A2E1B]/20 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative overflow-hidden max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={onClose}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#F7E6CA]/60 hover:bg-[#F7E6CA] text-[#4A2E1B] flex items-center justify-center font-bold text-sm transition-colors z-10"
+            >
+              ✕
+            </button>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+              <div className="rounded-2xl overflow-hidden aspect-square bg-[#F7E6CA]/30 border border-[#4A2E1B]/15">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <div>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#8C9A7B] bg-[#8C9A7B]/15 px-2.5 py-1 rounded-full">
+                    {product.tag}
+                  </span>
+                  <h3 className="font-serif text-2xl font-bold text-[#4A2E1B] mt-2 leading-tight">
+                    {product.name}
+                  </h3>
+                  <p className="text-xs text-[#7A5230] italic font-sans">{product.enName}</p>
+                  
+                  <div className="mt-2 text-2xl font-serif font-bold text-[#4A2E1B]">
+                    {formatCurrency(product.price)}
+                  </div>
+                </div>
+
+                <p className="text-xs text-[#4A2E1B]/80 leading-relaxed font-sans">
+                  {product.description}
+                </p>
+
+                {product.ingredients && product.ingredients.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-bold text-[#4A2E1B] uppercase tracking-wider mb-1.5">
+                      Thành phần chính:
+                    </h4>
+                    <ul className="text-xs text-[#4A2E1B]/75 space-y-1">
+                      {product.ingredients.map((ing, idx) => (
+                        <li key={idx} className="flex items-center space-x-1.5">
+                          <span className="text-[#8C9A7B]">✓</span>
+                          <span>{ing}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {product.benefits && product.benefits.length > 0 && (
+                  <div>
+                    <h4 className="text-xs font-bold text-[#4A2E1B] uppercase tracking-wider mb-1.5">
+                      Công dụng vượt trội:
+                    </h4>
+                    <ul className="text-xs text-[#4A2E1B]/75 space-y-1">
+                      {product.benefits.map((ben, idx) => (
+                        <li key={idx} className="flex items-center space-x-1.5">
+                          <span className="text-[#7A5230]">★</span>
+                          <span>{ben}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="p-3 bg-[#F7E6CA]/30 rounded-xl border border-[#4A2E1B]/10 text-xs text-[#4A2E1B]/80">
+                  <strong>Quy cách:</strong> {product.packaging} ({product.volume})
+                </div>
+
+                <button
+                  onClick={() => {
+                    onAddToCart(product);
+                    onClose();
+                  }}
+                  className="w-full py-3.5 bg-[#4A2E1B] hover:bg-[#321c0e] text-[#FFFCF7] rounded-xl font-sans font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all"
+                >
+                  Thêm vào giỏ hàng ({formatCurrency(product.price)})
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= CONTACT COMPONENT =================
+    function Contact() {
+      const [formData, setFormData] = useState({ name: '', phone: '', email: '', message: '' });
+      const [isSent, setIsSent] = useState(false);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        if (!formData.name || !formData.phone) {
+          alert('Vui lòng điền Họ tên và Số điện thoại!');
+          return;
+        }
+        setIsSent(true);
+        setTimeout(() => {
+          setFormData({ name: '', phone: '', email: '', message: '' });
+          setIsSent(false);
+        }, 4000);
+      };
+
+      return (
+        <section id="contact" className="py-20 lg:py-28 relative">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#FFFCF7] border border-[#4A2E1B]/15">
+                <span className="text-[11px] uppercase tracking-widest text-[#7A5230] font-sans font-semibold">
+                  Kết nối cùng chúng tôi
+                </span>
+              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#4A2E1B]">
+                Thông Tin Liên Hệ & Giao Lưu
+              </h2>
+              <div className="w-16 h-0.5 bg-[#4A2E1B]/30 mx-auto" />
+              <p className="font-sans text-sm sm:text-base text-[#4A2E1B]/75 leading-relaxed">
+                Bạn có câu hỏi về bảng thành phần, muốn trải nghiệm thử mẫu thử hoặc đặt hàng số lượng lớn cho sự kiện? 
+                Hãy nhắn ngay cho Nhóm 1 - Tổ 3 nhé!
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+              <div className="lg:col-span-5 space-y-6">
+                <div className="p-8 rounded-3xl bg-[#FFFCF7] border border-[#4A2E1B]/15 shadow-sm space-y-6">
+                  <div>
+                    <span className="font-signature text-3xl text-[#7A5230] block">
+                      The ViéCOCO Studio
+                    </span>
+                    <p className="font-serif text-xl font-bold text-[#4A2E1B] mt-1">
+                      Dự án Khởi Nghiệp Mỹ Phẩm Dừa Xanh
+                    </p>
+                    <p className="text-xs text-[#7A5230] font-sans mt-0.5">
+                      Đơn vị chủ trì: Nhóm 1 - Tổ 3 (Tập thể 12A10)
+                    </p>
+                  </div>
+
+                  <div className="space-y-4 text-xs font-sans border-t border-[#4A2E1B]/10 pt-6">
+                    <div className="flex items-start space-x-3">
+                      <div className="w-8 h-8 rounded-full bg-[#F7E6CA] text-[#4A2E1B] flex items-center justify-center shrink-0">
+                        📍
+                      </div>
+                      <div>
+                        <strong className="block text-sm text-[#4A2E1B] font-serif">Địa Điểm Dự Án:</strong>
+                        <span className="text-[#4A2E1B]/80 leading-relaxed">
+                          Phòng học Lớp 12A10 • Trường THPT (Khu vực trưng bày sản phẩm & trải nghiệm thử)
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3">
+                      <div className="w-8 h-8 rounded-full bg-[#F7E6CA] text-[#4A2E1B] flex items-center justify-center shrink-0">
+                        📞
+                      </div>
+                      <div>
+                        <strong className="block text-sm text-[#4A2E1B] font-serif">Hotline / Zalo Dự Án:</strong>
+                        <span className="text-[#4A2E1B]/80 font-mono">0988 234 567 (Đại diện Tổ 3)</span>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3">
+                      <div className="w-8 h-8 rounded-full bg-[#F7E6CA] text-[#4A2E1B] flex items-center justify-center shrink-0">
+                        🥥
+                      </div>
+                      <div>
+                        <strong className="block text-sm text-[#4A2E1B] font-serif">Kênh Mạng Xã Hội:</strong>
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          <span className="bg-[#F7E6CA]/60 text-[#4A2E1B] px-2.5 py-1 rounded-md text-[11px] font-medium">
+                            Instagram: @theviecoco.official
+                          </span>
+                          <span className="bg-[#F7E6CA]/60 text-[#4A2E1B] px-2.5 py-1 rounded-md text-[11px] font-medium">
+                            TikTok: @auracoco.12a10
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-4 rounded-2xl bg-[#8C9A7B]/15 border border-[#8C9A7B]/30 flex items-center space-x-3">
+                    <span className="text-2xl">🌿</span>
+                    <div>
+                      <p className="text-xs font-bold text-[#4A2E1B] font-serif">Cam kết 100% tự nhiên</p>
+                      <p className="text-[11px] text-[#7A5230]">
+                        Không chất hóa học • An toàn học đường • Bao bì thân thiện
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:col-span-7">
+                <div className="p-8 sm:p-10 rounded-3xl bg-[#FFFCF7] border border-[#4A2E1B]/15 shadow-sm">
+                  <h3 className="font-serif text-2xl font-bold text-[#4A2E1B] mb-2">
+                    Gửi Tin Nhắn Cho Nhóm 1 - Tổ 3
+                  </h3>
+                  <p className="text-xs text-[#7A5230] mb-6 font-sans">
+                    Điền thông tin bên dưới, các thành viên Tổ 3 sẽ hồi đáp ngay trong giờ giải lao!
+                  </p>
+
+                  {isSent ? (
+                    <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-300 text-center space-y-2 animate-fadeIn">
+                      <span className="text-3xl block">💌</span>
+                      <h4 className="font-serif font-bold text-lg text-emerald-800">
+                        Đã Gửi Lời Nhắn Thành Công!
+                      </h4>
+                      <p className="text-xs text-emerald-700">
+                        Cảm ơn bạn đã quan tâm đến The ViéCOCO. Nhóm sẽ liên lạc với bạn sớm nhất có thể.
+                      </p>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-xs font-semibold text-[#4A2E1B] mb-1.5">
+                            Họ và tên của bạn *
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={formData.name}
+                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                            placeholder="Ví dụ: Hoàng Mai Chi"
+                            className="w-full px-4 py-3 bg-[#F7E6CA]/20 border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] focus:bg-white focus:ring-2 focus:ring-[#7A5230] outline-none transition-all"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-xs font-semibold text-[#4A2E1B] mb-1.5">
+                            Số điện thoại / Zalo *
+                          </label>
+                          <input
+                            type="tel"
+                            required
+                            value={formData.phone}
+                            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                            placeholder="Ví dụ: 0912 345 678"
+                            className="w-full px-4 py-3 bg-[#F7E6CA]/20 border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] focus:bg-white focus:ring-2 focus:ring-[#7A5230] outline-none transition-all"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-[#4A2E1B] mb-1.5">
+                          Email (Không bắt buộc)
+                        </label>
+                        <input
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          placeholder="ban@example.com"
+                          className="w-full px-4 py-3 bg-[#F7E6CA]/20 border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] focus:bg-white focus:ring-2 focus:ring-[#7A5230] outline-none transition-all"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-[#4A2E1B] mb-1.5">
+                          Lời nhắn / Yêu cầu đặt thử *
+                        </label>
+                        <textarea
+                          rows="4"
+                          required
+                          value={formData.message}
+                          onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                          placeholder="Bạn muốn hỏi về sản phẩm nào hay muốn đặt hàng số lượng bao nhiêu?..."
+                          className="w-full px-4 py-3 bg-[#F7E6CA]/20 border border-[#4A2E1B]/20 rounded-xl text-xs text-[#4A2E1B] focus:bg-white focus:ring-2 focus:ring-[#7A5230] outline-none transition-all resize-none"
+                        />
+                      </div>
+
+                      <button
+                        type="submit"
+                        className="w-full sm:w-auto px-8 py-3.5 bg-[#4A2E1B] hover:bg-[#321c0e] text-[#FFFCF7] rounded-xl font-sans font-bold text-xs uppercase tracking-wider shadow-md hover:shadow-lg transition-all"
+                      >
+                        Gửi thư cho Tổ 3 ✉
+                      </button>
+                    </form>
+                  )}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </section>
+      );
+    }
+
+    // ================= FOOTER COMPONENT (TINH CHỈNH CHỮ KÝ RÕ NÉT & "Since 2026") =================
+    function Footer({ onOpenQR, onNavigate }) {
+      const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
+      return (
+        <footer className="relative bg-[#4A2E1B] text-[#FFFCF7] pt-16 pb-12 overflow-hidden border-t-4 border-[#7A5230]">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#7A5230]/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#8C9A7B]/10 rounded-full blur-2xl pointer-events-none" />
+
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-[#FFFCF7]/15">
+              
+              <div className="md:col-span-5 space-y-4">
+                <div className="flex items-center space-x-3">
+                  <div className="w-10 h-10 rounded-full bg-[#FFFCF7] text-[#4A2E1B] flex items-center justify-center font-serif font-bold text-lg shadow-sm">
+                    V
+                  </div>
+                  <span className="font-serif text-3xl font-bold tracking-tight text-[#FFFCF7]">
+                    The ViéCOCO
+                  </span>
+                </div>
+                
+                <p className="font-serif text-sm tracking-[0.2em] uppercase text-[#F7E6CA]/90 font-medium">
+                  PURE NATURE — PURE YOU
+                </p>
+
+                <p className="font-sans text-xs text-[#FFFCF7]/75 italic leading-relaxed">
+                  "Thuần khiết từ thiên nhiên, trọn vẹn là chính bạn"
+                </p>
+
+                <p className="font-sans text-xs text-[#FFFCF7]/65 max-w-sm leading-relaxed">
+                  Thương hiệu mỹ phẩm dừa thủ công hữu cơ, chắt lọc tinh hoa dừa Bến Tre dành riêng cho làn da người Việt.
+                </p>
+              </div>
+
+              <div className="md:col-span-3 space-y-3">
+                <h4 className="font-serif text-base font-bold text-[#F7E6CA] tracking-wider uppercase">
+                  Điều Hướng Nhanh
+                </h4>
+                <ul className="space-y-2 text-xs font-sans text-[#FFFCF7]/80">
+                  <li>
+                    <button onClick={() => onNavigate('hero')} className="hover:text-[#F7E6CA] transition-colors">
+                      Trang chủ
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('about')} className="hover:text-[#F7E6CA] transition-colors">
+                      Giới thiệu thương hiệu
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('products')} className="hover:text-[#F7E6CA] transition-colors">
+                      Danh mục sản phẩm
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('contact')} className="hover:text-[#F7E6CA] transition-colors">
+                      Thông tin liên hệ
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="md:col-span-4 space-y-3">
+                <h4 className="font-serif text-base font-bold text-[#F7E6CA] tracking-wider uppercase">
+                  Truy Cập Nhanh Trên Điện Thoại
+                </h4>
+                <p className="text-xs text-[#FFFCF7]/75 leading-relaxed font-sans">
+                  Mở camera điện thoại quét mã QR để lưu trang web hoặc gửi nhanh cho bạn bè cùng lớp.
+                </p>
+                <button
+                  onClick={onOpenQR}
+                  className="px-4 py-2.5 bg-[#FFFCF7] text-[#4A2E1B] hover:bg-[#F7E6CA] rounded-xl text-xs font-bold transition-all flex items-center space-x-2 shadow-sm"
+                >
+                  <span>📱 Xem mã QR trang web</span>
+                </button>
+              </div>
+
+            </div>
+
+            {/* ARTISTIC SIGNATURE & CREDITS (CẢI TIẾN FONT CHỮ KÝ TINH TẾ & "Since 2026") */}
+            <div className="py-12 text-center space-y-3">
+              <div className="group cursor-pointer inline-block" onClick={scrollToTop}>
+                {/* Font Alex Brush: rõ chữ, mềm mại, kích thước tinh tế */}
+                <p className="font-signature text-4xl sm:text-5xl lg:text-6xl text-[#F7E6CA] tracking-wide transform hover:scale-105 transition-transform duration-300 drop-shadow-sm select-none">
+                  Signature: AURACOCO
+                </p>
+                {/* Dòng chữ Since 2026 font uốn lượn theo yêu cầu */}
+                <p className="font-signature text-2xl sm:text-3xl text-[#F7E6CA]/90 italic mt-1 tracking-wider select-none">
+                  Since 2026
+                </p>
+              </div>
+
+              <div className="pt-2">
+                <div className="inline-block px-5 py-2 rounded-full bg-[#FFFCF7]/10 backdrop-blur-sm border border-[#FFFCF7]/15">
+                  <p className="font-sans text-xs sm:text-sm font-medium tracking-wide text-[#FFFCF7]">
+                    ✨ Dự án thực hiện bởi: <strong className="text-[#F7E6CA] font-bold">Nhóm 1 - Tổ 3 đến từ 12A10</strong>
+                  </p>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-[#FFFCF7]/60 font-sans">
+                Mỹ phẩm dừa thủ công • Tinh hoa Bến Tre • Phong cách Eco-Chic
+              </p>
+            </div>
+
+            <div className="pt-6 border-t border-[#FFFCF7]/15 flex flex-col sm:flex-row items-center justify-between text-[11px] text-[#FFFCF7]/60 font-sans gap-4">
+              <p>© 2026 The ViéCOCO. Tất cả các quyền được bảo lưu.</p>
+              
+              <button
+                onClick={scrollToTop}
+                className="flex items-center space-x-1 hover:text-[#F7E6CA] transition-colors"
+              >
+                <span>Lên đầu trang</span>
+                <span>↑</span>
+              </button>
+            </div>
+
+          </div>
+        </footer>
+      );
+    }
+
+    // ================= TOAST COMPONENT =================
+    function Toast({ message, onClose }) {
+      if (!message) return null;
+
+      return (
+        <div className="fixed bottom-6 right-6 z-50 animate-bounce">
+          <div className="bg-[#4A2E1B] text-[#FFFCF7] px-5 py-3.5 rounded-2xl shadow-2xl flex items-center space-x-3 border border-[#F7E6CA]/30">
+            <span className="text-lg">🥥</span>
+            <span className="text-xs font-sans font-medium">{message}</span>
+            <button
+              onClick={onClose}
+              className="text-[#F7E6CA] hover:text-white font-bold text-sm ml-2"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // ================= ROOT MAIN APP COMPONENT =================
+    function MainApp() {
+      // Products state persisted in localStorage
+      const [products, setProducts] = useState(() => {
+        try {
+          const saved = localStorage.getItem('viecoco_products_v2');
+          if (saved) return JSON.parse(saved);
+        } catch (e) {}
+        return INITIAL_PRODUCTS;
+      });
+
+      // Cart state persisted in localStorage
+      const [cart, setCart] = useState(() => {
+        try {
+          const savedCart = localStorage.getItem('viecoco_cart_v2');
+          if (savedCart) return JSON.parse(savedCart);
+        } catch (e) {}
+        return [];
+      });
+
+      // Admin user state persisted in localStorage
+      const [adminUser, setAdminUser] = useState(() => {
+        try {
+          return localStorage.getItem('viecoco_admin_email') || null;
+        } catch (e) {
+          return null;
+        }
+      });
+
+      const [activeSection, setActiveSection] = useState('hero');
+      const [isEditPriceMode, setIsEditPriceMode] = useState(false);
+      const [isPriceModalOpen, setIsPriceModalOpen] = useState(false);
+      const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+      const [isCartOpen, setIsCartOpen] = useState(false);
+      const [isAdminAuthOpen, setIsAdminAuthOpen] = useState(false);
+      const [isProductManageOpen, setIsProductManageOpen] = useState(false);
+      const [productToEdit, setProductToEdit] = useState(null);
+      const [showTestingNotice, setShowTestingNotice] = useState(false);
+      const [quickViewProduct, setQuickViewProduct] = useState(null);
+      const [toastMessage, setToastMessage] = useState(null);
+
+      // Save products to state and LocalStorage
+      const saveProductsToStorage = (updatedList) => {
+        setProducts(updatedList);
+        try {
+          localStorage.setItem('viecoco_products_v2', JSON.stringify(updatedList));
+        } catch (e) {}
+      };
+
+      useEffect(() => {
+        try {
+          localStorage.setItem('viecoco_cart_v2', JSON.stringify(cart));
+        } catch (e) {}
+      }, [cart]);
+
+      // Admin Login
+      const handleAdminLoginSuccess = (email) => {
+        setAdminUser(email);
+        try {
+          localStorage.setItem('viecoco_admin_email', email);
+        } catch (e) {}
+        setToastMessage(`👑 Đã đăng nhập quản trị thành công: ${email}`);
+      };
+
+      // Admin Logout
+      const handleAdminLogout = () => {
+        setAdminUser(null);
+        try {
+          localStorage.removeItem('viecoco_admin_email');
+        } catch (e) {}
+        setToastMessage('Đã đăng xuất khỏi tài khoản Admin');
+      };
+
+      // Add or Edit Product (CMS)
+      const handleSaveProduct = (productData) => {
+        const exists = products.some((p) => p.id === productData.id);
+        let updatedList;
+        if (exists) {
+          updatedList = products.map((p) => (p.id === productData.id ? productData : p));
+          setToastMessage(`Đã cập nhật sản phẩm "${productData.name}"`);
+        } else {
+          updatedList = [productData, ...products];
+          setToastMessage(`✨ Đã thêm mẫu sản phẩm mới "${productData.name}"`);
+        }
+        saveProductsToStorage(updatedList);
+      };
+
+      // Delete Product (CMS)
+      const handleDeleteProduct = (productId) => {
+        const prod = products.find((p) => p.id === productId);
+        if (confirm(`Bạn có chắc chắn muốn xóa sản phẩm "${prod ? prod.name : ''}" khỏi website?`)) {
+          const updatedList = products.filter((p) => p.id !== productId);
+          saveProductsToStorage(updatedList);
+          // Remove from cart if present
+          setCart((prev) => prev.filter((item) => item.product.id !== productId));
+          setToastMessage(`Đã xóa sản phẩm thành công.`);
+        }
+      };
+
+      // Inline update single price
+      const handleUpdatePrice = (productId, newPrice) => {
+        const updated = products.map((p) => (p.id === productId ? { ...p, price: newPrice } : p));
+        saveProductsToStorage(updated);
+
+        setCart((prevCart) =>
+          prevCart.map((item) =>
+            item.product.id === productId
+              ? { ...item, product: { ...item.product, price: newPrice } }
+              : item
+          )
+        );
+
+        setToastMessage(`Đã cập nhật giá mới: ${formatCurrency(newPrice)}`);
+      };
+
+      // Batch update prices
+      const handleBatchUpdatePrices = (updatedPrices) => {
+        const updated = products.map((p) => {
+          if (updatedPrices[p.id] !== undefined) {
+            return { ...p, price: updatedPrices[p.id] };
+          }
+          return p;
+        });
+        saveProductsToStorage(updated);
+
+        setCart((prevCart) =>
+          prevCart.map((item) =>
+            updatedPrices[item.product.id] !== undefined
+              ? { ...item, product: { ...item.product, price: updatedPrices[item.product.id] } }
+              : item
+          )
+        );
+
+        setToastMessage('Đã lưu thành công tất cả giá mới vào hệ thống!');
+      };
+
+      // Reset defaults
+      const handleResetDefaults = () => {
+        saveProductsToStorage(INITIAL_PRODUCTS);
+        setCart([]);
+        setToastMessage('Đã khôi phục 3 sản phẩm mẫu chuẩn ban đầu!');
+      };
+
+      // Cart operations
+      const handleAddToCart = (product) => {
+        setCart((prevCart) => {
+          const existing = prevCart.find((item) => item.product.id === product.id);
+          if (existing) {
+            return prevCart.map((item) =>
+              item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+            );
+          }
+          return [...prevCart, { product, quantity: 1 }];
+        });
+        setToastMessage(`Đã thêm "${product.name}" vào giỏ hàng`);
+      };
+
+      const handleUpdateQuantity = (productId, quantity) => {
+        if (quantity <= 0) {
+          handleRemoveItem(productId);
+          return;
+        }
+        setCart((prevCart) =>
+          prevCart.map((item) => (item.product.id === productId ? { ...item, quantity } : item))
+        );
+      };
+
+      const handleRemoveItem = (productId) => {
+        setCart((prevCart) => prevCart.filter((item) => item.product.id !== productId));
+        setToastMessage('Đã bỏ sản phẩm khỏi giỏ');
+      };
+
+      const handleClearCart = () => setCart([]);
+
+      // Trigger Testing Notice when clicking checkout
+      const handleTriggerTestingNotice = () => {
+        setIsCartOpen(false);
+        setShowTestingNotice(true);
+      };
+
+      // Smooth scroll navigation
+      const handleNavigate = (sectionId) => {
+        setActiveSection(sectionId);
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
+      useEffect(() => {
+        const sections = ['hero', 'about', 'products', 'contact'];
+        const handleScroll = () => {
+          const scrollPos = window.scrollY + 200;
+          for (const sectionId of sections) {
+            const el = document.getElementById(sectionId);
+            if (el) {
+              const top = el.offsetTop;
+              const height = el.offsetHeight;
+              if (scrollPos >= top && scrollPos < top + height) {
+                setActiveSection(sectionId);
+                break;
+              }
+            }
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, []);
+
+      const totalCartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+      return (
+        <div className="min-h-screen bg-[#F7E6CA] text-[#4A2E1B] font-sans antialiased selection:bg-[#7A5230] selection:text-[#FFFCF7]">
+          
+          {/* Top Admin Notice Bar if logged in */}
+          {adminUser && (
+            <div className="bg-[#4A2E1B] text-[#F7E6CA] px-4 py-2 text-xs flex items-center justify-between sticky top-0 z-50 border-b border-[#F7E6CA]/30">
+              <div className="flex items-center space-x-2">
+                <span className="text-base">👑</span>
+                <span>Chế độ Quản Trị Viên: <strong>{adminUser}</strong></span>
+              </div>
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => {
+                    setProductToEdit(null);
+                    setIsProductManageOpen(true);
+                  }}
+                  className="px-2.5 py-1 bg-[#F7E6CA] text-[#4A2E1B] font-bold rounded-lg hover:bg-white transition-colors"
+                >
+                  + Đăng mẫu sản phẩm mới
+                </button>
+                <button
+                  onClick={handleAdminLogout}
+                  className="text-xs text-red-300 hover:text-white underline"
+                >
+                  Đăng xuất
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Left Sidebar on Desktop */}
+          <Sidebar
+            activeSection={activeSection}
+            onNavigate={handleNavigate}
+            cartCount={totalCartCount}
+            onOpenCart={() => setIsCartOpen(true)}
+            onOpenQR={() => setIsQRModalOpen(true)}
+            isEditPriceMode={isEditPriceMode}
+            onToggleEditPriceMode={() => {
+              const next = !isEditPriceMode;
+              setIsEditPriceMode(next);
+              setToastMessage(
+                next
+                  ? '⚙️ Đã bật Chế độ chỉnh sửa giá bán. Nhấp vào giá từng sản phẩm để sửa!'
+                  : 'Đã tắt chế độ sửa giá. Chuyển sang giao diện bán lẻ.'
+              );
+            }}
+            adminUser={adminUser}
+            onOpenAdminAuth={() => setIsAdminAuthOpen(true)}
+            onLogoutAdmin={handleAdminLogout}
+            onOpenAddProduct={() => {
+              setProductToEdit(null);
+              setIsProductManageOpen(true);
+            }}
+          />
+
+          <main className="lg:pl-72 transition-all duration-300">
+            <Hero
+              onExploreClick={() => handleNavigate('products')}
+              onOpenQR={() => setIsQRModalOpen(true)}
+            />
+
+            <About />
+
+            {/* PRODUCT SHOWCASE SECTION WITH CMS CONTROLS */}
+            <section id="products" className="py-20 lg:py-28 relative bg-[#FFFCF7]/40 border-y border-[#4A2E1B]/10">
+              <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+                  <div>
+                    <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#FFFCF7] border border-[#4A2E1B]/15 mb-3">
+                      <span className="w-2 h-2 rounded-full bg-[#8C9A7B]"></span>
+                      <span className="text-[11px] uppercase tracking-widest text-[#7A5230] font-sans font-semibold">
+                        Danh mục sản phẩm cốt lõi
+                      </span>
+                    </div>
+                    <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-[#4A2E1B]">
+                      Bộ Sưu Tập Dừa Thủ Công
+                    </h2>
+                    <p className="font-sans text-xs sm:text-sm text-[#4A2E1B]/75 mt-2 max-w-xl">
+                      Chắt lọc từ tinh chất dừa sáp Bến Tre, dịu nhẹ nâng niu làn môi và làn da với các dưỡng chất tự nhiên thuần khiết nhất.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-3">
+                    {/* Add Product Button for Admin */}
+                    {adminUser && (
+                      <button
+                        onClick={() => {
+                          setProductToEdit(null);
+                          setIsProductManageOpen(true);
+                        }}
+                        className="px-4 py-2.5 rounded-2xl bg-[#4A2E1B] text-[#FFFCF7] text-xs font-bold shadow-md hover:bg-black transition-all flex items-center space-x-1.5"
+                      >
+                        <span>✨</span>
+                        <span>Đăng mẫu sản phẩm mới</span>
+                      </button>
+                    )}
+
+                    <button
+                      onClick={() => {
+                        const next = !isEditPriceMode;
+                        setIsEditPriceMode(next);
+                        setToastMessage(
+                          next
+                            ? '⚙️ Đã bật Chế độ chỉnh sửa giá bán'
+                            : 'Đã tắt chế độ sửa giá'
+                        );
+                      }}
+                      className={`px-4 py-2.5 rounded-2xl text-xs font-semibold flex items-center space-x-2 transition-all shadow-sm ${
+                        isEditPriceMode
+                          ? 'bg-[#7A5230] text-[#FFFCF7] ring-2 ring-[#7A5230]/40'
+                          : 'bg-[#FFFCF7] text-[#4A2E1B] border border-[#4A2E1B]/20 hover:border-[#4A2E1B]'
+                      }`}
+                      title="Bật/Tắt chế độ nhấp vào giá để sửa nhanh"
+                    >
+                      <span>⚙️ Chế độ chỉnh sửa giá:</span>
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        isEditPriceMode ? 'bg-[#FFFCF7] text-[#4A2E1B]' : 'bg-[#4A2E1B]/10 text-[#4A2E1B]'
+                      }`}>
+                        {isEditPriceMode ? 'BẬT' : 'TẮT'}
+                      </span>
+                    </button>
+
+                    <button
+                      onClick={() => setIsPriceModalOpen(true)}
+                      className="px-4 py-2.5 rounded-2xl bg-[#FFFCF7] text-[#4A2E1B] border border-[#4A2E1B]/20 hover:bg-[#F7E6CA] text-xs font-semibold transition-all shadow-sm flex items-center space-x-1.5"
+                      title="Mở bảng tổng hợp sửa tất cả giá cùng lúc"
+                    >
+                      <span>📋 Bảng quản lý giá</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Products Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {products.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      isEditPriceMode={isEditPriceMode}
+                      onUpdatePrice={handleUpdatePrice}
+                      onAddToCart={handleAddToCart}
+                      onQuickView={(p) => setQuickViewProduct(p)}
+                      isAdmin={!!adminUser}
+                      onEditProduct={(p) => {
+                        setProductToEdit(p);
+                        setIsProductManageOpen(true);
+                      }}
+                      onDeleteProduct={handleDeleteProduct}
+                    />
+                  ))}
+                </div>
+
+                {/* TESTIMONIALS */}
+                <div className="mt-20 pt-16 border-t border-[#4A2E1B]/15">
+                  <div className="text-center mb-10">
+                    <span className="text-[11px] uppercase tracking-widest text-[#7A5230] font-sans font-semibold">
+                      Cảm nhận chân thực
+                    </span>
+                    <h3 className="font-serif text-2xl sm:text-3xl font-bold text-[#4A2E1B] mt-1">
+                      Được Yêu Thích Bởi Lứa Tuổi Học Đường & Giới Trẻ
+                    </h3>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="p-6 rounded-2xl bg-[#FFFCF7] border border-[#4A2E1B]/15 shadow-sm space-y-3">
+                      <div className="text-amber-500 text-xs">★★★★★</div>
+                      <p className="text-xs text-[#4A2E1B]/80 italic leading-relaxed font-sans">
+                        "Son dưỡng dừa mùi thơm nhẹ tênh như kẹo dừa non, thoa buổi tối ngủ dậy môi căng mọng cực thích. Đi học thoa không hề bị bóng nhẫy hay bết dính!"
+                      </p>
+                      <div className="pt-2 border-t border-[#4A2E1B]/10 flex items-center space-x-2">
+                        <div className="w-7 h-7 rounded-full bg-[#F7E6CA] flex items-center justify-center text-xs font-bold text-[#4A2E1B]">
+                          M
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-[#4A2E1B]">Minh Anh</p>
+                          <p className="text-[10px] text-[#7A5230]">Học sinh 12A10</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-[#FFFCF7] border border-[#4A2E1B]/15 shadow-sm space-y-3">
+                      <div className="text-amber-500 text-xs">★★★★★</div>
+                      <p className="text-xs text-[#4A2E1B]/80 italic leading-relaxed font-sans">
+                        "Hũ scrub môi đường mía dừa dùng xong thoa son lên màu siêu mướt. Bao bì hũ thủy tinh cầm rất chắc tay và sang trọng, không nghĩ là sản phẩm thủ công của các bạn học sinh làm!"
+                      </p>
+                      <div className="pt-2 border-t border-[#4A2E1B]/10 flex items-center space-x-2">
+                        <div className="w-7 h-7 rounded-full bg-[#F7E6CA] flex items-center justify-center text-xs font-bold text-[#4A2E1B]">
+                          K
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-[#4A2E1B]">Khánh Linh</p>
+                          <p className="text-[10px] text-[#7A5230]">Thành viên CLB Khởi Nghiệp</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-6 rounded-2xl bg-[#FFFCF7] border border-[#4A2E1B]/15 shadow-sm space-y-3">
+                      <div className="text-amber-500 text-xs">★★★★★</div>
+                      <p className="text-xs text-[#4A2E1B]/80 italic leading-relaxed font-sans">
+                        "Tẩy da chết body cà phê dừa thơm nức mũi mùi Robusta rang mộc. Tắm xong da mịn như lụa, đỡ hẳn sần sùi vùng bắp tay. Rất tự hào về dự án của Tổ 3!"
+                      </p>
+                      <div className="pt-2 border-t border-[#4A2E1B]/10 flex items-center space-x-2">
+                        <div className="w-7 h-7 rounded-full bg-[#F7E6CA] flex items-center justify-center text-xs font-bold text-[#4A2E1B]">
+                          H
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-[#4A2E1B]">Hoàng Nam</p>
+                          <p className="text-[10px] text-[#7A5230]">Bí thư Chi đoàn</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </section>
+
+            <Contact />
+
+            <Footer
+              onOpenQR={() => setIsQRModalOpen(true)}
+              onNavigate={handleNavigate}
+            />
+          </main>
+
+          {/* Floating Mobile QR Trigger */}
+          <div className="fixed bottom-6 left-6 z-30 lg:hidden">
+            <button
+              onClick={() => setIsQRModalOpen(true)}
+              className="p-3 bg-[#4A2E1B] text-[#FFFCF7] rounded-full shadow-2xl flex items-center justify-center border border-[#F7E6CA]/30 active:scale-95 transition-transform"
+              title="Mở mã QR"
+            >
+              📱
+            </button>
+          </div>
+
+          {/* ALL MODALS */}
+          <AdminAuthModal
+            isOpen={isAdminAuthOpen}
+            onClose={() => setIsAdminAuthOpen(false)}
+            onLoginSuccess={handleAdminLoginSuccess}
+          />
+
+          <ProductManageModal
+            isOpen={isProductManageOpen}
+            onClose={() => {
+              setIsProductManageOpen(false);
+              setProductToEdit(null);
+            }}
+            productToEdit={productToEdit}
+            onSaveProduct={handleSaveProduct}
+          />
+
+          <TestingNoticeModal
+            isOpen={showTestingNotice}
+            onClose={() => setShowTestingNotice(false)}
+          />
+
+          <PriceModal
+            isOpen={isPriceModalOpen}
+            onClose={() => setIsPriceModalOpen(false)}
+            products={products}
+            onBatchUpdatePrices={handleBatchUpdatePrices}
+            onResetDefaults={handleResetDefaults}
+          />
+
+          <QRModal
+            isOpen={isQRModalOpen}
+            onClose={() => setIsQRModalOpen(false)}
+          />
+
+          <CartDrawer
+            isOpen={isCartOpen}
+            onClose={() => setIsCartOpen(false)}
+            items={cart}
+            onUpdateQuantity={handleUpdateQuantity}
+            onRemoveItem={handleRemoveItem}
+            onClearCart={handleClearCart}
+            onOpenQR={() => {
+              setIsCartOpen(false);
+              setIsQRModalOpen(true);
+            }}
+            onTriggerTestingNotice={handleTriggerTestingNotice}
+          />
+
+          <QuickViewModal
+            product={quickViewProduct}
+            onClose={() => setQuickViewProduct(null)}
+            onAddToCart={handleAddToCart}
+          />
+
+          <Toast
+            message={toastMessage}
+            onClose={() => setToastMessage(null)}
+          />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<MainApp />);
+  </script>
+</body>
+</html>
